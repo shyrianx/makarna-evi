@@ -1,124 +1,249 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <!-- Cache Prevention Headers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
   <title>MAKARNA EVİ - Dijital QR Menü</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #090d16;
+      color: #f1f5f9;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tap-bounce {
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .tap-bounce:active {
+      transform: scale(0.94);
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .glass-nav {
+      background: rgba(9, 13, 22, 0.90);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glass-card {
+      background: linear-gradient(180deg, rgba(22, 28, 45, 0.8) 0%, rgba(15, 20, 32, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-card:hover {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen pb-28 select-none">
+<body class="min-h-screen pb-32 select-none">
 
-  <!-- Top Header Banner -->
-  <header class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-b border-slate-800/80 px-4 pt-6 pb-5">
+  <!-- TOP HEADER -->
+  <header class="relative bg-gradient-to-b from-slate-900 via-slate-900/90 to-[#090d16] border-b border-white/5 pt-5 pb-4 px-4">
     <div class="max-w-md mx-auto">
-      <div class="flex items-start justify-between gap-3">
+      
+      <!-- Top Row: Brand & Fast Actions -->
+      <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-red-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-white font-black text-2xl tracking-tighter">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-red-500 flex items-center justify-center shadow-lg shadow-orange-500/25 text-2xl">
             🍝
           </div>
           <div>
-            <h1 class="text-xl font-black tracking-tight text-white flex items-center gap-1.5">
-              MAKARNA EVİ
-            </h1>
-            <p class="text-xs text-amber-400 font-medium">
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-extrabold tracking-tight text-white">
+                MAKARNA EVİ
+              </h1>
+            </div>
+            <p class="text-xs text-amber-400/90 font-semibold tracking-wide">
               Taze Makarna & Lezzet Durağı
             </p>
           </div>
         </div>
 
-        <div id="table-badge-container" class="hidden bg-amber-500/20 border border-amber-500/40 rounded-xl px-3 py-1.5 text-right shadow-sm">
-          <span class="block text-[10px] text-amber-300/80 font-bold uppercase tracking-wider">Masa</span>
-          <span id="table-badge-text" class="text-sm font-black text-amber-400"></span>
+        <!-- Right Side: Refresh Button & Table Badge -->
+        <div class="flex items-center gap-2 shrink-0">
+          <button 
+            onclick="forceRefreshMenu()" 
+            title="Menüyü Güncelle" 
+            class="tap-bounce flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 text-slate-300 text-xs font-semibold shadow-sm transition-all"
+          >
+            <span class="text-amber-400 text-sm">🔄</span>
+            <span class="hidden xs:inline">Yenile</span>
+          </button>
+
+          <div id="table-badge-container" class="hidden flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 rounded-xl px-2.5 py-1.5">
+            <span class="text-[10px] text-amber-400/80 font-bold uppercase">Masa</span>
+            <span id="table-badge-text" class="text-xs font-black text-amber-300"></span>
+          </div>
         </div>
       </div>
 
-      
+      <!-- App Sub-tag -->
+      <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+        <span class="flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-emerald-400 font-medium">Canlı Menü Açık</span>
+        </span>
+        <span class="text-slate-500 font-medium">Özdemirsoft Sistemleri</span>
+      </div>
+
     </div>
   </header>
 
-  <!-- Sticky Search & Categories -->
-  <div class="sticky top-0 z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/80 shadow-md">
-    <div class="max-w-md mx-auto px-4 py-2.5 space-y-2">
-      <!-- Search Input -->
+  <!-- STICKY SEARCH & CATEGORY BAR -->
+  <div class="sticky top-0 z-30 glass-nav border-b border-white/5 shadow-lg shadow-black/20">
+    <div class="max-w-md mx-auto px-4 pt-2.5 pb-2 space-y-2.5">
+      
+      <!-- Quick Search Bar -->
       <div class="relative">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
         <input
           id="search-input"
           type="text"
-          placeholder="Yemek veya içecek ara..."
-          class="w-full pl-9 pr-8 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-colors"
+          placeholder="Yemek, burger, makarna veya içecek ara..."
+          class="w-full pl-10 pr-9 py-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/30 transition-all"
         />
-        <button id="search-clear" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">✕</button>
+        <button id="search-clear" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">✕</button>
       </div>
 
-      <!-- Category Filter Buttons -->
-      <div id="category-pills" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-        <!-- Injected via JS -->
-      </div>
+      <!-- Smooth Category Pills (Horizontal Scrolling) -->
+      <nav id="category-pills" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 scroll-smooth" aria-label="Kategoriler">
+        <!-- Injected via JavaScript -->
+      </nav>
+
     </div>
   </div>
 
-  <!-- Menu Products List -->
-  <main id="menu-container" class="max-w-md mx-auto px-4 mt-4 space-y-6">
-    <!-- Injected via JS -->
+  <!-- MENU PRODUCTS CONTAINER -->
+  <main id="menu-container" class="max-w-md mx-auto px-4 mt-4 space-y-7">
+    <!-- Injected via JavaScript -->
   </main>
 
-  <!-- Bottom Floating Summary & Actions -->
-  <aside class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800/90 px-4 py-3 shadow-2xl">
-    <div class="max-w-md mx-auto flex items-center justify-between gap-3">
-      <div class="text-xs">
-        <span class="text-slate-400 block">Sipariş Taslağınız:</span>
-        <span id="cart-summary" class="text-base font-black text-amber-400">0.00 TL (0 Ürün)</span>
+  <!-- FLOATING BOTTOM CART BAR -->
+  <aside id="floating-cart-bar" class="fixed bottom-3 left-4 right-4 z-40 max-w-md mx-auto transition-all duration-300 transform translate-y-0">
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-3 shadow-2xl shadow-orange-600/30 border border-amber-300/30 flex items-center justify-between text-slate-950">
+      
+      <div class="flex items-center gap-2.5 pl-1 cursor-pointer" onclick="openCartModal()">
+        <div class="w-9 h-9 rounded-xl bg-slate-950 text-amber-400 flex items-center justify-center font-black text-base shadow-inner">
+          🛒
+        </div>
+        <div>
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-900/80">Sipariş Taslağı</div>
+          <div id="cart-summary" class="text-sm font-black text-slate-950">0 Ürün • 0.00 ₺</div>
+        </div>
       </div>
+
       <button 
-        id="btn-open-cart"
-        class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
+        onclick="openCartModal()"
+        class="tap-bounce py-2 px-3.5 rounded-xl bg-slate-950 text-amber-400 hover:text-amber-300 font-extrabold text-xs flex items-center gap-1 shadow-md"
       >
-        Sepeti İncele 🛒
+        <span>Sepeti Gör</span>
+        <span class="text-sm">➔</span>
       </button>
+
     </div>
   </aside>
 
-  <!-- Cart Modal -->
-  <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-5 shadow-2xl flex flex-col max-h-[85vh]">
+  <!-- CART & WAITER SUMMARY MODAL -->
+  <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 shadow-2xl flex flex-col max-h-[90vh] animate-slide-up">
+      
+      <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <h3 class="font-black text-white text-base">🛒 Sipariş Taslağınız</h3>
-        <button id="btn-close-cart" class="text-slate-400 hover:text-white p-1 font-bold">✕</button>
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🛒</span>
+          <div>
+            <h3 class="font-black text-white text-base">Sipariş Listeniz</h3>
+            <p class="text-[11px] text-slate-400">Seçtiğiniz ürünleri kontrol edip garsonunuza iletebilirsiniz.</p>
+          </div>
+        </div>
+        <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold tap-bounce">✕</button>
       </div>
-      <div id="cart-items" class="flex-1 overflow-y-auto py-3 space-y-2">
+
+      <!-- Items List -->
+      <div id="cart-items" class="flex-1 overflow-y-auto py-3 space-y-2.5 my-1 pr-1">
         <!-- Injected via JS -->
       </div>
+
+      <!-- Modal Footer -->
       <div class="pt-3 border-t border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-slate-400 text-sm">Tahmini Tutar:</span>
-          <span id="cart-modal-total" class="text-xl font-black text-amber-400">0.00 TL</span>
+        
+        <!-- Total Row -->
+        <div class="flex items-center justify-between bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+          <span class="text-slate-400 text-xs font-bold">Toplam Tutar:</span>
+          <span id="cart-modal-total" class="text-xl font-black text-amber-400">0.00 ₺</span>
         </div>
-        <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-[11px] text-amber-300">
-          💡 Bu liste telefonunuzda kayıtlı kalır. Garsonunuz masanıza geldiğinde siparişinizi hızlıca iletebilirsiniz.
+
+        <!-- Waiter Info Callout -->
+        <div class="bg-amber-500/10 border border-amber-500/25 rounded-xl p-3 text-xs text-amber-300 flex items-start gap-2.5">
+          <span class="text-base shrink-0">💡</span>
+          <div class="text-[11px] leading-relaxed text-amber-200/90">
+            Masanıza garson geldiğinde bu listeyi telefonunuzdan kolayca gösterebilirsiniz. Ürünler sepetinizde kayıtlı kalır.
+          </div>
         </div>
-        <button id="btn-clear-cart" class="w-full py-2.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:text-red-400 transition-colors">
-          Listeyi Temizle
-        </button>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2">
+          <button 
+            onclick="clearCart()" 
+            class="tap-bounce flex-1 py-2.5 rounded-xl bg-slate-800/90 hover:bg-red-500/20 hover:text-red-400 text-slate-400 font-bold text-xs border border-slate-700/50 transition-colors"
+          >
+            Temizle 🗑️
+          </button>
+          <button 
+            onclick="closeCartModal()" 
+            class="tap-bounce flex-[2] py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/20"
+          >
+            Menüye Dön & Ekle
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    const MENU_DATA = [{"id":1,"name":"Tostlar","icon":"Sandwich","color":"amber","printer_target":"kitchen","sort_order":1,"description":"Tüm tostlarımız taze demlenmiş sıcak çay ikramı ile servis edilir.","products":[{"id":166,"category_id":1,"name":"Kaşarlı Tost","price":125,"vat_rate":10,"description":"Eriyen bol kaşar peyniri ve tereyağı lezzetiyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80","calories":"~380 kcal"},{"id":167,"category_id":1,"name":"Sucuklu Tost","price":150,"vat_rate":10,"description":"Özel kasap sucuğu ve baharat dengesiyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80","calories":"~420 kcal"},{"id":168,"category_id":1,"name":"Karışık Tost","price":150,"vat_rate":10,"description":"Sucuk ve kaşar peynirinin klasik uyumu","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"}]},{"id":2,"name":"Burgerler & Menüler","icon":"UtensilsCrossed","color":"amber","printer_target":"kitchen","sort_order":2,"description":"Menü seçimlerinde patates kızartması ve kutu içecek dahildir.","products":[{"id":169,"category_id":2,"name":"Tavuk Burger","price":200,"vat_rate":10,"description":"Çıtır tavuk fileto, marul, turşu ve özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80","calories":"~550 kcal"},{"id":170,"category_id":2,"name":"Tavuk Burger Menü","price":275,"vat_rate":10,"description":"Tavuk Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":171,"category_id":2,"name":"Et Burger","price":250,"vat_rate":10,"description":"Ev yapımı burger köftesi, karamelize dokunuşlar, yeşillik ve sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":172,"category_id":2,"name":"Et Burger Menü","price":325,"vat_rate":10,"description":"Et Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80","calories":"~1050 kcal"},{"id":173,"category_id":2,"name":"Cheeseburger","price":275,"vat_rate":10,"description":"Burger köftesi, erimiş çift cheddar peyniri ve özel sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80","calories":"~720 kcal"},{"id":174,"category_id":2,"name":"Cheeseburger Menü","price":350,"vat_rate":10,"description":"Cheeseburger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~1120 kcal"},{"id":175,"category_id":2,"name":"Baba Burger","price":300,"vat_rate":10,"description":"Doyurucu çift köfte/ekstra malzeme, duble cheddar ve şefin özel sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1583032015879-63e5b326cf54?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":176,"category_id":2,"name":"Baba Burger Menü","price":400,"vat_rate":10,"description":"Baba Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=600&q=80","calories":"~1350 kcal"}]},{"id":3,"name":"Pizzalar","icon":"Pizza","color":"amber","printer_target":"kitchen","sort_order":3,"description":"İnce çıtır hamur ve bol malzeme ile hazırlanır.","products":[{"id":177,"category_id":3,"name":"Karışık Pizza","price":300,"vat_rate":10,"description":"Özel domates sosu, mozzarella, sucuk, sosis, mantar, mısır, zeytin ve biber","is_active":1,"image_url":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":178,"category_id":3,"name":"Karışık Pizza Menü","price":375,"vat_rate":10,"description":"Karışık Pizza + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80","calories":"~1350 kcal"}]},{"id":4,"name":"Aperatifler & Atıştırmalıklar","icon":"CookingPot","color":"amber","printer_target":"kitchen","sort_order":4,"description":"Paylaşımlık sıcak lezzetler.","products":[{"id":179,"category_id":4,"name":"Patates Kızartması","price":125,"vat_rate":10,"description":"Baharat çeşnisi ve dip soslar eşliğinde altın sarısı çıtır patates","is_active":1,"image_url":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":180,"category_id":4,"name":"Karışık Kızartma Sepeti","price":250,"vat_rate":10,"description":"Nugget, sigara böreği, çıtır soğan halkaları ve patates kızartması","is_active":1,"image_url":"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80","calories":"~850 kcal"}]},{"id":5,"name":"Taze Salatalar","icon":"Salad","color":"amber","printer_target":"kitchen","sort_order":5,"description":"Günlük taze yeşillikler ve özel soslar ile.","products":[{"id":181,"category_id":5,"name":"Sezar Salata","price":230,"vat_rate":10,"description":"Göbek marul, ızgara tavuk dilimleri, kruton ekmek, parmesan ve Sezar sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":182,"category_id":5,"name":"Tavuklu Salata","price":230,"vat_rate":10,"description":"Mevsim yeşillikleri, marine tavuk parçaları, mısır, çeri domates ve zeytinyağlı sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80","calories":"~400 kcal"},{"id":183,"category_id":5,"name":"Ton Balıklı Salata","price":250,"vat_rate":10,"description":"Akdeniz yeşillikleri, lezzetli ton balığı, mısır, kapari ve limon-zeytinyağı sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80","calories":"~380 kcal"}]},{"id":6,"name":"Makarnalar","icon":"Soup","color":"amber","printer_target":"kitchen","sort_order":6,"description":"İtalyan usulü taze soslarla harmanlanmış makarnalar.","products":[{"id":184,"category_id":6,"name":"Spagetti Napoli","price":170,"vat_rate":10,"description":"Fesleğenli taze domates sosu ve rendelenmiş peynir ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":185,"category_id":6,"name":"Penne Alfredo","price":230,"vat_rate":10,"description":"Krema, mantar, tavuk parçaları ve parmesan lezzeti","is_active":1,"image_url":"https://images.unsplash.com/photo-1621996346565-e3d5d628169e?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":186,"category_id":6,"name":"Penne Köri","price":230,"vat_rate":10,"description":"Hafif baharatlı kremsi köri sos ve tavuk dilimleri","is_active":1,"image_url":"https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=600&q=80","calories":"~700 kcal"},{"id":187,"category_id":6,"name":"Fettuccine Alfredo","price":250,"vat_rate":10,"description":"Geleneksel yassı makarna, zengin kremalı mantar ve tavuk sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=600&q=80","calories":"~800 kcal"},{"id":188,"category_id":6,"name":"Fettuccine Köri","price":250,"vat_rate":10,"description":"Yoğun kremalı köri sosu, tavuk parçaları ve taze baharatlar","is_active":1,"image_url":"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":189,"category_id":6,"name":"Spagetti Bolonez","price":250,"vat_rate":10,"description":"Ağır ateşte pişmiş kıymalı geleneksel domates sosu ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1622973536968-3ead9e780960?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":190,"category_id":6,"name":"Mexican Penne (Acılı)","price":250,"vat_rate":10,"description":"Meksika fasulyesi, mısır, acı jalapeno biberi ve baharatlı domates sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80","calories":"~600 kcal"}]},{"id":7,"name":"Tavuk & Tabak Menüleri (Royal Tabaklar)","icon":"ChefHat","color":"amber","printer_target":"kitchen","sort_order":7,"description":"Özenle marine edilmiş lezzetler, makarna ve taze yeşillik eşliğinde doyurucu sunumlar.","products":[{"id":191,"category_id":7,"name":"Royal Chicken Rice","price":250,"vat_rate":10,"description":"Özel baharatlarla marine edilmiş sulu tavuk parçaları, tane pirinç pilavı ve mevsim yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":192,"category_id":7,"name":"Royal Mushroom","price":250,"vat_rate":10,"description":"Kremalı mantar soslu jülyen tavuk, leziz makarna ve taze Akdeniz yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":193,"category_id":7,"name":"Royal Curry","price":250,"vat_rate":10,"description":"Kremalı köri soslu marine tavuk, enfes tereyağlı makarna ve mevsim yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80","calories":"~700 kcal"},{"id":194,"category_id":7,"name":"Tavuk Pilav Salata","price":250,"vat_rate":10,"description":"Klasik lezzet; marine edilmiş tavuk eti, tane pirinç pilavı ve taze mevsim salatası","is_active":1,"image_url":"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80","calories":"~600 kcal"}]},{"id":8,"name":"Soğuk İçecekler","icon":"GlassWater","color":"amber","printer_target":"kitchen","sort_order":8,"description":"Buz gibi ferahlatıcı lezzetler.","products":[{"id":195,"category_id":8,"name":"Su","price":15,"vat_rate":10,"description":"0.5L Doğal kaynak suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80","calories":"0 kcal"},{"id":196,"category_id":8,"name":"Sade Soda","price":25,"vat_rate":10,"description":"200ml Doğal zengin mineralli maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80","calories":"0 kcal"},{"id":197,"category_id":8,"name":"Dimes Kutu Meyve Suyu","price":30,"vat_rate":10,"description":"200ml Pipetli soğuk meyve suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80","calories":"~90 kcal"},{"id":198,"category_id":8,"name":"Büyük Ayran","price":35,"vat_rate":10,"description":"300ml Taze yayık lezzetinde soğuk ayran","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~110 kcal"},{"id":199,"category_id":8,"name":"Capri-Sun","price":35,"vat_rate":10,"description":"200ml Karışık meyve aromalı içecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80","calories":"~75 kcal"},{"id":200,"category_id":8,"name":"Meyveli Soda Çeşitleri","price":40,"vat_rate":10,"description":"Elmalı, limonlu veya çilekli maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80","calories":"~80 kcal"},{"id":201,"category_id":8,"name":"Kutu İçecekler (Kola, Fanta, Sprite)","price":90,"vat_rate":10,"description":"330ml Kutu soğuk gazlı meşrubat","is_active":1,"image_url":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80","calories":"~140 kcal"},{"id":202,"category_id":8,"name":"Red Bull","price":100,"vat_rate":10,"description":"250ml Soğuk enerji içeceği","is_active":1,"image_url":"https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=600&q=80","calories":"~115 kcal"},{"id":203,"category_id":8,"name":"Soğuk Kutu Nescafe","price":100,"vat_rate":10,"description":"250ml Kutu soğuk kahve","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"}]},{"id":9,"name":"Kahveler & Sıcak İçecekler","icon":"Coffee","color":"amber","printer_target":"kitchen","sort_order":9,"description":"Taze çekirdek kahveler ve sıcak kış içecekleri.","products":[{"id":204,"category_id":9,"name":"Espresso","price":100,"vat_rate":10,"description":"Taze çekilmiş yoğun İtalyan espressosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80","calories":"~5 kcal"},{"id":205,"category_id":9,"name":"Americano","price":100,"vat_rate":10,"description":"Sıcak su ile dengelenmiş çift shot espresso","is_active":1,"image_url":"https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80","calories":"~10 kcal"},{"id":206,"category_id":9,"name":"Filtre Kahve","price":100,"vat_rate":10,"description":"Taze demlenmiş aromatik filtre kahve","is_active":1,"image_url":"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80","calories":"~10 kcal"},{"id":207,"category_id":9,"name":"Latte","price":100,"vat_rate":10,"description":"Kadife kıvamında sıcak süt kreması ve espresso","is_active":1,"image_url":"https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"},{"id":208,"category_id":9,"name":"Cappuccino","price":100,"vat_rate":10,"description":"Yoğun süt köpüğü ve espresso uyumu","is_active":1,"image_url":"https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80","calories":"~110 kcal"},{"id":209,"category_id":9,"name":"Türk Kahvesi","price":100,"vat_rate":10,"description":"Bol köpüklü geleneksel Türk kahvesi, lokum ve su ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80","calories":"~20 kcal"},{"id":210,"category_id":9,"name":"Sıcak Çikolata","price":100,"vat_rate":10,"description":"Yoğun çikolata lezzeti ve sıcak süt","is_active":1,"image_url":"https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=600&q=80","calories":"~250 kcal"},{"id":211,"category_id":9,"name":"Soğuk Kahve Çeşitleri (Iced Latte / Iced Americano)","price":100,"vat_rate":10,"description":"Buz gibi ferahlatıcı espresso lezzeti","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"},{"id":212,"category_id":9,"name":"Salep (Tarçın eşliğinde)","price":150,"vat_rate":10,"description":"Taze sütle pişirilmiş hakiki orkide salebi ve tarçın","is_active":1,"image_url":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80","calories":"~220 kcal"},{"id":213,"category_id":9,"name":"Atom (Özel karışım vitamin & enerji içeceği)","price":200,"vat_rate":10,"description":"Taze süt, bal, muz ve fındık/ceviz vitamin bombası","is_active":1,"image_url":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80","calories":"~280 kcal"}]}];
+    const MENU_DATA = [{"id":1,"name":"Tostlar","icon":"Sandwich","color":"amber","printer_target":"kitchen","sort_order":1,"description":"Tüm tostlarımız taze demlenmiş sıcak çay ikramı ile servis edilir.","icon_emoji":"🥪","products":[{"id":166,"category_id":1,"name":"Kaşarlı Tost","price":125,"vat_rate":10,"description":"Eriyen bol kaşar peyniri ve tereyağı lezzetiyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80","calories":"~380 kcal"},{"id":167,"category_id":1,"name":"Sucuklu Tost","price":150,"vat_rate":10,"description":"Özel kasap sucuğu ve baharat dengesiyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80","calories":"~420 kcal"},{"id":168,"category_id":1,"name":"Karışık Tost","price":150,"vat_rate":10,"description":"Sucuk ve kaşar peynirinin klasik uyumu","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"}]},{"id":2,"name":"Burgerler & Menüler","icon":"UtensilsCrossed","color":"amber","printer_target":"kitchen","sort_order":2,"description":"Menü seçimlerinde patates kızartması ve kutu içecek dahildir.","icon_emoji":"🍔","products":[{"id":169,"category_id":2,"name":"Tavuk Burger","price":200,"vat_rate":10,"description":"Çıtır tavuk fileto, marul, turşu ve özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80","calories":"~550 kcal"},{"id":170,"category_id":2,"name":"Tavuk Burger Menü","price":275,"vat_rate":10,"description":"Tavuk Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":171,"category_id":2,"name":"Et Burger","price":250,"vat_rate":10,"description":"Ev yapımı burger köftesi, karamelize dokunuşlar, yeşillik ve sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":172,"category_id":2,"name":"Et Burger Menü","price":325,"vat_rate":10,"description":"Et Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80","calories":"~1050 kcal"},{"id":173,"category_id":2,"name":"Cheeseburger","price":275,"vat_rate":10,"description":"Burger köftesi, erimiş çift cheddar peyniri ve özel sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80","calories":"~720 kcal"},{"id":174,"category_id":2,"name":"Cheeseburger Menü","price":350,"vat_rate":10,"description":"Cheeseburger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~1120 kcal"},{"id":175,"category_id":2,"name":"Baba Burger","price":300,"vat_rate":10,"description":"Doyurucu çift köfte/ekstra malzeme, duble cheddar ve şefin özel sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1583032015879-63e5b326cf54?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":176,"category_id":2,"name":"Baba Burger Menü","price":400,"vat_rate":10,"description":"Baba Burger + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=600&q=80","calories":"~1350 kcal"}]},{"id":3,"name":"Pizzalar","icon":"Pizza","color":"amber","printer_target":"kitchen","sort_order":3,"description":"İnce çıtır hamur ve bol malzeme ile hazırlanır.","icon_emoji":"🍕","products":[{"id":177,"category_id":3,"name":"Karışık Pizza","price":300,"vat_rate":10,"description":"Özel domates sosu, mozzarella, sucuk, sosis, mantar, mısır, zeytin ve biber","is_active":1,"image_url":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80","calories":"~950 kcal"},{"id":178,"category_id":3,"name":"Karışık Pizza Menü","price":375,"vat_rate":10,"description":"Karışık Pizza + Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80","calories":"~1350 kcal"}]},{"id":4,"name":"Aperatifler & Atıştırmalıklar","icon":"CookingPot","color":"amber","printer_target":"kitchen","sort_order":4,"description":"Paylaşımlık sıcak lezzetler.","icon_emoji":"🍟","products":[{"id":179,"category_id":4,"name":"Patates Kızartması","price":125,"vat_rate":10,"description":"Baharat çeşnisi ve dip soslar eşliğinde altın sarısı çıtır patates","is_active":1,"image_url":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":180,"category_id":4,"name":"Karışık Kızartma Sepeti","price":250,"vat_rate":10,"description":"Nugget, sigara böreği, çıtır soğan halkaları ve patates kızartması","is_active":1,"image_url":"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80","calories":"~850 kcal"}]},{"id":5,"name":"Taze Salatalar","icon":"Salad","color":"amber","printer_target":"kitchen","sort_order":5,"description":"Günlük taze yeşillikler ve özel soslar ile.","icon_emoji":"🥗","products":[{"id":181,"category_id":5,"name":"Sezar Salata","price":230,"vat_rate":10,"description":"Göbek marul, ızgara tavuk dilimleri, kruton ekmek, parmesan ve Sezar sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":182,"category_id":5,"name":"Tavuklu Salata","price":230,"vat_rate":10,"description":"Mevsim yeşillikleri, marine tavuk parçaları, mısır, çeri domates ve zeytinyağlı sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80","calories":"~400 kcal"},{"id":183,"category_id":5,"name":"Ton Balıklı Salata","price":250,"vat_rate":10,"description":"Akdeniz yeşillikleri, lezzetli ton balığı, mısır, kapari ve limon-zeytinyağı sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80","calories":"~380 kcal"}]},{"id":6,"name":"Makarnalar","icon":"Soup","color":"amber","printer_target":"kitchen","sort_order":6,"description":"İtalyan usulü taze soslarla harmanlanmış makarnalar.","icon_emoji":"🍝","products":[{"id":184,"category_id":6,"name":"Spagetti Napoli","price":170,"vat_rate":10,"description":"Fesleğenli taze domates sosu ve rendelenmiş peynir ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=600&q=80","calories":"~450 kcal"},{"id":185,"category_id":6,"name":"Penne Alfredo","price":230,"vat_rate":10,"description":"Krema, mantar, tavuk parçaları ve parmesan lezzeti","is_active":1,"image_url":"https://images.unsplash.com/photo-1621996346565-e3d5d628169e?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":186,"category_id":6,"name":"Penne Köri","price":230,"vat_rate":10,"description":"Hafif baharatlı kremsi köri sos ve tavuk dilimleri","is_active":1,"image_url":"https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=600&q=80","calories":"~700 kcal"},{"id":187,"category_id":6,"name":"Fettuccine Alfredo","price":250,"vat_rate":10,"description":"Geleneksel yassı makarna, zengin kremalı mantar ve tavuk sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=600&q=80","calories":"~800 kcal"},{"id":188,"category_id":6,"name":"Fettuccine Köri","price":250,"vat_rate":10,"description":"Yoğun kremalı köri sosu, tavuk parçaları ve taze baharatlar","is_active":1,"image_url":"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":189,"category_id":6,"name":"Spagetti Bolonez","price":250,"vat_rate":10,"description":"Ağır ateşte pişmiş kıymalı geleneksel domates sosu ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1622973536968-3ead9e780960?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":190,"category_id":6,"name":"Mexican Penne (Acılı)","price":250,"vat_rate":10,"description":"Meksika fasulyesi, mısır, acı jalapeno biberi ve baharatlı domates sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80","calories":"~600 kcal"}]},{"id":7,"name":"Tavuk & Tabak Menüleri (Royal Tabaklar)","icon":"ChefHat","color":"amber","printer_target":"kitchen","sort_order":7,"description":"Özenle marine edilmiş lezzetler, makarna ve taze yeşillik eşliğinde doyurucu sunumlar.","icon_emoji":"🍗","products":[{"id":191,"category_id":7,"name":"Royal Chicken Rice","price":250,"vat_rate":10,"description":"Özel baharatlarla marine edilmiş sulu tavuk parçaları, tane pirinç pilavı ve mevsim yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80","calories":"~650 kcal"},{"id":192,"category_id":7,"name":"Royal Mushroom","price":250,"vat_rate":10,"description":"Kremalı mantar soslu jülyen tavuk, leziz makarna ve taze Akdeniz yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80","calories":"~750 kcal"},{"id":193,"category_id":7,"name":"Royal Curry","price":250,"vat_rate":10,"description":"Kremalı köri soslu marine tavuk, enfes tereyağlı makarna ve mevsim yeşillikleri ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80","calories":"~700 kcal"},{"id":194,"category_id":7,"name":"Tavuk Pilav Salata","price":250,"vat_rate":10,"description":"Klasik lezzet; marine edilmiş tavuk eti, tane pirinç pilavı ve taze mevsim salatası","is_active":1,"image_url":"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80","calories":"~600 kcal"}]},{"id":8,"name":"Soğuk İçecekler","icon":"GlassWater","color":"amber","printer_target":"kitchen","sort_order":8,"description":"Buz gibi ferahlatıcı lezzetler.","icon_emoji":"🥤","products":[{"id":195,"category_id":8,"name":"Su","price":15,"vat_rate":10,"description":"0.5L Doğal kaynak suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80","calories":"0 kcal"},{"id":196,"category_id":8,"name":"Sade Soda","price":25,"vat_rate":10,"description":"200ml Doğal zengin mineralli maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80","calories":"0 kcal"},{"id":197,"category_id":8,"name":"Dimes Kutu Meyve Suyu","price":30,"vat_rate":10,"description":"200ml Pipetli soğuk meyve suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80","calories":"~90 kcal"},{"id":198,"category_id":8,"name":"Büyük Ayran","price":35,"vat_rate":10,"description":"300ml Taze yayık lezzetinde soğuk ayran","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80","calories":"~110 kcal"},{"id":199,"category_id":8,"name":"Capri-Sun","price":35,"vat_rate":10,"description":"200ml Karışık meyve aromalı içecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80","calories":"~75 kcal"},{"id":200,"category_id":8,"name":"Meyveli Soda Çeşitleri","price":40,"vat_rate":10,"description":"Elmalı, limonlu veya çilekli maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80","calories":"~80 kcal"},{"id":201,"category_id":8,"name":"Kutu İçecekler (Kola, Fanta, Sprite)","price":90,"vat_rate":10,"description":"330ml Kutu soğuk gazlı meşrubat","is_active":1,"image_url":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80","calories":"~140 kcal"},{"id":202,"category_id":8,"name":"Red Bull","price":100,"vat_rate":10,"description":"250ml Soğuk enerji içeceği","is_active":1,"image_url":"https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=600&q=80","calories":"~115 kcal"},{"id":203,"category_id":8,"name":"Soğuk Kutu Nescafe","price":100,"vat_rate":10,"description":"250ml Kutu soğuk kahve","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"}]},{"id":9,"name":"Kahveler & Sıcak İçecekler","icon":"Coffee","color":"amber","printer_target":"kitchen","sort_order":9,"description":"Taze çekirdek kahveler ve sıcak kış içecekleri.","icon_emoji":"☕","products":[{"id":204,"category_id":9,"name":"Espresso","price":100,"vat_rate":10,"description":"Taze çekilmiş yoğun İtalyan espressosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80","calories":"~5 kcal"},{"id":205,"category_id":9,"name":"Americano","price":100,"vat_rate":10,"description":"Sıcak su ile dengelenmiş çift shot espresso","is_active":1,"image_url":"https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80","calories":"~10 kcal"},{"id":206,"category_id":9,"name":"Filtre Kahve","price":100,"vat_rate":10,"description":"Taze demlenmiş aromatik filtre kahve","is_active":1,"image_url":"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80","calories":"~10 kcal"},{"id":207,"category_id":9,"name":"Latte","price":100,"vat_rate":10,"description":"Kadife kıvamında sıcak süt kreması ve espresso","is_active":1,"image_url":"https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"},{"id":208,"category_id":9,"name":"Cappuccino","price":100,"vat_rate":10,"description":"Yoğun süt köpüğü ve espresso uyumu","is_active":1,"image_url":"https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80","calories":"~110 kcal"},{"id":209,"category_id":9,"name":"Türk Kahvesi","price":100,"vat_rate":10,"description":"Bol köpüklü geleneksel Türk kahvesi, lokum ve su ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80","calories":"~20 kcal"},{"id":210,"category_id":9,"name":"Sıcak Çikolata","price":100,"vat_rate":10,"description":"Yoğun çikolata lezzeti ve sıcak süt","is_active":1,"image_url":"https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=600&q=80","calories":"~250 kcal"},{"id":211,"category_id":9,"name":"Soğuk Kahve Çeşitleri (Iced Latte / Iced Americano)","price":100,"vat_rate":10,"description":"Buz gibi ferahlatıcı espresso lezzeti","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80","calories":"~120 kcal"},{"id":212,"category_id":9,"name":"Salep (Tarçın eşliğinde)","price":150,"vat_rate":10,"description":"Taze sütle pişirilmiş hakiki orkide salebi ve tarçın","is_active":1,"image_url":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80","calories":"~220 kcal"},{"id":213,"category_id":9,"name":"Atom (Özel karışım vitamin & enerji içeceği)","price":200,"vat_rate":10,"description":"Taze süt, bal, muz ve fındık/ceviz vitamin bombası","is_active":1,"image_url":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80","calories":"~280 kcal"}]}];
+    const BUILD_TIME = 1790010296283;
     let activeCategory = 'all';
     let searchQuery = '';
     let cart = {};
 
-    // Check table from URL
+    // Restore cart from localStorage
+    try {
+      const saved = localStorage.getItem('makarna_evi_cart');
+      if (saved) cart = JSON.parse(saved);
+    } catch (e) {}
+
+    // Check table from URL (?table=Masa 1 or ?masa=1)
     const urlParams = new URLSearchParams(window.location.search);
     const tableParam = urlParams.get('table') || urlParams.get('masa');
     if (tableParam) {
@@ -126,39 +251,84 @@
       document.getElementById('table-badge-text').innerText = tableParam;
     }
 
-    // Render Categories
+    // Manual Force Refresh to bypass phone browser cache
+    function forceRefreshMenu() {
+      const url = new URL(window.location.href);
+      url.searchParams.set('v', '2');
+      url.searchParams.set('_t', Date.now());
+      window.location.href = url.toString();
+    }
+
+    // Render Category Pills
     function renderCategories() {
       const container = document.getElementById('category-pills');
+      
       let html = `
-        <button onclick="setCategory('all')" class="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${activeCategory === 'all' ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
-          ✨ Tüm Menü
+        <button 
+          onclick="setCategory('all')" 
+          class="tap-bounce shrink-0 px-3.5 py-2 rounded-2xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 ${activeCategory === 'all' ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md shadow-orange-500/20' : 'bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800'}"
+        >
+          <span>✨</span>
+          <span>Tüm Menü</span>
         </button>
       `;
 
       MENU_DATA.forEach(cat => {
         const isSel = String(activeCategory) === String(cat.id);
+        const count = cat.products ? cat.products.length : 0;
         html += `
-          <button onclick="setCategory('${cat.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${isSel ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
+          <button 
+            id="cat-pill-${cat.id}"
+            onclick="setCategory('${cat.id}')" 
+            class="tap-bounce shrink-0 px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${isSel ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md shadow-orange-500/20 font-extrabold' : 'bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800'}"
+          >
+            <span>${cat.icon_emoji || '🍽️'}</span>
             <span>${cat.name}</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isSel ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-slate-400'}">${cat.products ? cat.products.length : 0}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full font-black ${isSel ? 'bg-slate-950/25 text-slate-950' : 'bg-slate-800 text-slate-400'}">${count}</span>
           </button>
         `;
       });
+
       container.innerHTML = html;
     }
 
+    // Set Active Category
     function setCategory(catId) {
       activeCategory = catId;
       renderCategories();
       renderMenu();
+
+      // If specific category, scroll smoothly to it
+      if (catId !== 'all') {
+        const targetSection = document.getElementById('cat-section-' + catId);
+        if (targetSection) {
+          const navOffset = 135;
+          const elementPosition = targetSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Scroll active pill into view
+      if (catId !== 'all') {
+        const pill = document.getElementById('cat-pill-' + catId);
+        if (pill) {
+          pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
     }
 
-    // Render Menu Products
+    // Render Menu Cards
     function renderMenu() {
       const container = document.getElementById('menu-container');
       let filtered = MENU_DATA;
 
-      if (activeCategory !== 'all') {
+      if (activeCategory !== 'all' && !searchQuery.trim()) {
         filtered = filtered.filter(c => String(c.id) === String(activeCategory));
       }
 
@@ -166,16 +336,19 @@
         const q = searchQuery.toLowerCase().trim();
         filtered = filtered.map(c => ({
           ...c,
-          products: (c.products || []).filter(p => p.name.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q)))
+          products: (c.products || []).filter(p => 
+            p.name.toLowerCase().includes(q) || 
+            (p.description && p.description.toLowerCase().includes(q))
+          )
         })).filter(c => c.products && c.products.length > 0);
       }
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-16 bg-slate-900/40 rounded-2xl border border-slate-800/60 p-6">
-            <p class="text-3xl mb-2">🍽️</p>
-            <h3 class="text-sm font-bold text-slate-300">Aradığınız ürün bulunamadı</h3>
-            <p class="text-xs text-slate-500 mt-1">Farklı bir kelime deneyebilirsiniz.</p>
+          <div class="text-center py-16 bg-slate-900/40 rounded-3xl border border-slate-800/60 p-6">
+            <p class="text-4xl mb-3">🍽️</p>
+            <h3 class="text-sm font-bold text-slate-200">Sonuç Bulunamadı</h3>
+            <p class="text-xs text-slate-500 mt-1">Aramanızla eşleşen ürün bulunamadı. Başka bir kelime deneyebilirsiniz.</p>
           </div>
         `;
         return;
@@ -184,63 +357,114 @@
       let html = '';
       filtered.forEach(cat => {
         html += `
-          <section class="space-y-3">
+          <section id="cat-section-${cat.id}" class="space-y-3 pt-1">
+            <!-- Category Header -->
             <div class="flex items-center justify-between">
-              <h2 class="text-base font-extrabold text-white tracking-tight flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                ${cat.name}
-              </h2>
-              <span class="text-xs text-slate-500 font-medium">${cat.products ? cat.products.length : 0} çeşit</span>
+              <div class="flex items-center gap-2">
+                <span class="text-xl">${cat.icon_emoji || '🍽️'}</span>
+                <h2 class="text-base font-extrabold text-white tracking-tight">
+                  ${cat.name}
+                </h2>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-500 bg-slate-900/80 px-2 py-0.5 rounded-lg border border-slate-800">
+                ${cat.products ? cat.products.length : 0} Çeşit
+              </span>
             </div>
+
+            <!-- Special Note Callout if exists -->
             ${cat.description ? `
-              <p class="text-[11px] text-amber-300 font-semibold bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-xl flex items-center gap-2">
-                <span>✨</span> <span>${cat.description}</span>
-              </p>
+              <div class="bg-amber-500/10 border border-amber-500/25 rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 text-xs text-amber-300/90 font-medium">
+                <span class="text-sm shrink-0">✨</span>
+                <span class="leading-snug">${cat.description}</span>
+              </div>
             ` : ''}
 
-            <div class="grid grid-cols-1 gap-2.5">
+            <!-- Products List -->
+            <div class="grid grid-cols-1 gap-3">
         `;
 
         (cat.products || []).forEach(p => {
           const inCart = cart[p.id] ? cart[p.id].qty : 0;
           html += `
-            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3.5 flex gap-3.5 shadow-sm">
-              ${p.image_url ? `
-                <img src="${p.image_url}" alt="${p.name}" class="w-20 h-20 rounded-xl object-cover border border-slate-800 shrink-0" loading="lazy" />
-              ` : `
-                <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-800 flex items-center justify-center shrink-0 text-2xl">
-                  🍽️
-                </div>
-              `}
+            <div class="glass-card rounded-2xl p-3.5 flex gap-3.5 shadow-sm transition-all">
+              
+              <!-- Product Image -->
+              <div class="relative w-24 h-24 rounded-2xl overflow-hidden bg-slate-800/80 border border-slate-700/50 shrink-0 flex items-center justify-center">
+                ${p.image_url ? `
+                  <img 
+                    src="${p.image_url}" 
+                    alt="${p.name}" 
+                    class="w-full h-full object-cover" 
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <div class="hidden absolute inset-0 items-center justify-center text-3xl bg-slate-800">
+                    ${cat.icon_emoji || '🍽️'}
+                  </div>
+                ` : `
+                  <span class="text-3xl">${cat.icon_emoji || '🍽️'}</span>
+                `}
+              </div>
 
+              <!-- Product Details -->
               <div class="flex-1 flex flex-col justify-between min-w-0">
                 <div>
                   <div class="flex items-start justify-between gap-1.5">
-                    <h3 class="text-sm font-bold text-white leading-snug">${p.name}</h3>
-                    ${p.calories ? `
-                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 shrink-0 whitespace-nowrap shadow-sm">
-                        🔥 ${p.calories}
-                      </span>
-                    ` : ''}
+                    <h3 class="text-sm font-extrabold text-white leading-snug tracking-tight truncate pr-1">
+                      ${p.name}
+                    </h3>
                   </div>
-                  ${p.description ? `<p class="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">${p.description}</p>` : ''}
+
+                  ${p.description ? `
+                    <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                      ${p.description}
+                    </p>
+                  ` : ''}
                 </div>
 
-                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/50">
-                  <span class="text-base font-black text-amber-400">
-                    ${Number(p.price).toFixed(2)} <span class="text-xs font-bold text-amber-500">TL</span>
-                  </span>
+                <!-- Price, Calories & Quantity Actions -->
+                <div class="flex items-end justify-between mt-2 pt-2 border-t border-white/5">
+                  <div>
+                    ${p.calories ? `
+                      <div class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400/90 mb-0.5">
+                        <span>🔥</span> <span>${p.calories}</span>
+                      </div>
+                    ` : ''}
+                    <div class="text-base font-black text-amber-400 tracking-tight">
+                      ${Number(p.price).toFixed(2)} <span class="text-xs font-bold text-amber-500">₺</span>
+                    </div>
+                  </div>
 
+                  <!-- Quick Add / Counter Controls -->
                   <div class="flex items-center gap-1.5">
                     ${inCart > 0 ? `
-                      <button onclick="changeQty(${p.id}, -1)" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-bold flex items-center justify-center hover:bg-slate-700">-</button>
-                      <span class="text-xs font-bold text-white w-4 text-center">${inCart}</span>
-                    ` : ''}
-                    <button onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs flex items-center gap-1 hover:bg-amber-400 active:scale-95 shadow-sm shadow-amber-500/20">
-                      <span>+</span> <span>${inCart > 0 ? 'Ekle' : 'Seç'}</span>
-                    </button>
+                      <div class="flex items-center bg-slate-900 border border-amber-500/40 rounded-xl p-0.5 shadow-sm">
+                        <button 
+                          onclick="changeQty(${p.id}, -1)" 
+                          class="tap-bounce w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-black text-sm flex items-center justify-center"
+                        >
+                          -
+                        </button>
+                        <span class="text-xs font-black text-amber-400 w-6 text-center">${inCart}</span>
+                        <button 
+                          onclick="changeQty(${p.id}, 1)" 
+                          class="tap-bounce w-7 h-7 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center"
+                        >
+                          +
+                        </button>
+                      </div>
+                    ` : `
+                      <button 
+                        onclick="changeQty(${p.id}, 1)" 
+                        class="tap-bounce px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs flex items-center gap-1 shadow-md shadow-orange-500/20"
+                      >
+                        <span>+</span>
+                        <span>Ekle</span>
+                      </button>
+                    `}
                   </div>
                 </div>
+
               </div>
             </div>
           `;
@@ -249,21 +473,24 @@
         html += `</div></section>`;
       });
 
+      // Footer
       html += `
-        <div class="pt-6 pb-4 text-center border-t border-slate-900 mt-6 space-y-1">
+        <footer class="pt-8 pb-4 text-center border-t border-slate-900 mt-8 space-y-2">
           <p class="text-xs text-slate-400 font-medium flex items-center justify-center gap-1.5">
             <span>ℹ️</span>
             <span>Kalori değerleri ortalama standart porsiyonlara göre hesaplanmıştır.</span>
           </p>
-          <p class="text-[10px] text-slate-600">Makarna Evi • Afiyet Olsun</p>
-        </div>
+          <p class="text-[11px] text-slate-600 font-semibold">
+            Makarna Evi • Özdemirsoft QR Menü Sistemi
+          </p>
+        </footer>
       `;
 
       container.innerHTML = html;
     }
 
+    // Change Cart Quantity
     function changeQty(prodId, delta) {
-      // Find product
       let prod = null;
       for (const c of MENU_DATA) {
         for (const p of (c.products || [])) {
@@ -281,42 +508,80 @@
         cart[prodId] = { prod, qty: next };
       }
 
+      try {
+        localStorage.setItem('makarna_evi_cart', JSON.stringify(cart));
+      } catch (e) {}
+
       updateCartUI();
       renderMenu();
     }
 
+    // Update Bottom Bar & Modal Cart
     function updateCartUI() {
       const items = Object.values(cart);
       const count = items.reduce((acc, it) => acc + it.qty, 0);
       const total = items.reduce((acc, it) => acc + (it.qty * it.prod.price), 0);
 
-      document.getElementById('cart-summary').innerText = `${total.toFixed(2)} TL (${count} Ürün)`;
-      document.getElementById('cart-modal-total').innerText = `${total.toFixed(2)} TL`;
+      const summaryText = count > 0 
+        ? `${count} Ürün • ${total.toFixed(2)} ₺` 
+        : '0 Ürün • 0.00 ₺';
+      
+      document.getElementById('cart-summary').innerText = summaryText;
+      document.getElementById('cart-modal-total').innerText = `${total.toFixed(2)} ₺`;
 
-      // Modal items
+      // Animate cart bar
+      const cartBar = document.getElementById('floating-cart-bar');
+      if (count > 0) {
+        cartBar.classList.remove('opacity-70');
+      }
+
+      // Render Modal Items
       const container = document.getElementById('cart-items');
       if (items.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 text-center py-6">Sepetiniz boş.</p>';
+        container.innerHTML = `
+          <div class="text-center py-10">
+            <p class="text-3xl mb-2">🛒</p>
+            <p class="text-xs font-bold text-slate-400">Listeniz henüz boş</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Menüden dilediğiniz yemekleri ekleyebilirsiniz.</p>
+          </div>
+        `;
         return;
       }
 
       let html = '';
       items.forEach(it => {
         html += `
-          <div class="flex items-center justify-between bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-            <div class="min-w-0 pr-2">
-              <h4 class="text-xs font-bold text-white truncate">${it.prod.name}</h4>
-              <span class="text-[11px] text-amber-400 font-bold">${it.prod.price} TL x ${it.qty} = ${(it.prod.price * it.qty).toFixed(2)} TL</span>
+          <div class="flex items-center justify-between bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+            <div class="min-w-0 pr-3">
+              <h4 class="text-xs font-black text-white truncate">${it.prod.name}</h4>
+              <div class="text-[11px] text-amber-400 font-bold mt-0.5">
+                ${it.prod.price} ₺ × ${it.qty} = <span class="text-white">${(it.prod.price * it.qty).toFixed(2)} ₺</span>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5 shrink-0">
-              <button onclick="changeQty(${it.prod.id}, -1)" class="w-6 h-6 rounded bg-slate-800 text-slate-300 font-bold">-</button>
-              <span class="text-xs font-bold text-white w-4 text-center">${it.qty}</span>
-              <button onclick="changeQty(${it.prod.id}, 1)" class="w-6 h-6 rounded bg-amber-500 text-slate-950 font-bold">+</button>
+            <div class="flex items-center gap-1.5 shrink-0 bg-slate-900 border border-slate-800 rounded-xl p-0.5">
+              <button onclick="changeQty(${it.prod.id}, -1)" class="tap-bounce w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-bold flex items-center justify-center hover:text-white">-</button>
+              <span class="text-xs font-black text-amber-400 w-5 text-center">${it.qty}</span>
+              <button onclick="changeQty(${it.prod.id}, 1)" class="tap-bounce w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-bold flex items-center justify-center hover:bg-amber-400">+</button>
             </div>
           </div>
         `;
       });
       container.innerHTML = html;
+    }
+
+    function openCartModal() {
+      document.getElementById('cart-modal').classList.remove('hidden');
+    }
+
+    function closeCartModal() {
+      document.getElementById('cart-modal').classList.add('hidden');
+    }
+
+    function clearCart() {
+      cart = {};
+      try { localStorage.removeItem('makarna_evi_cart'); } catch(e){}
+      updateCartUI();
+      renderMenu();
     }
 
     // Search events
@@ -334,21 +599,12 @@
       renderMenu();
     });
 
-    // Cart Modal events
-    document.getElementById('btn-open-cart').addEventListener('click', () => {
-      document.getElementById('cart-modal').classList.remove('hidden');
-    });
-    document.getElementById('btn-close-cart').addEventListener('click', () => {
-      document.getElementById('cart-modal').classList.add('hidden');
-    });
-    document.getElementById('btn-clear-cart').addEventListener('click', () => {
-      cart = {};
-      updateCartUI();
-      renderMenu();
-      document.getElementById('cart-modal').classList.add('hidden');
+    // Close modal when clicking backdrop
+    document.getElementById('cart-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'cart-modal') closeCartModal();
     });
 
-    // Initialize
+    // Initialize UI
     renderCategories();
     renderMenu();
     updateCartUI();
