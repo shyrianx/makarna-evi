@@ -11,7 +11,7 @@
   
   <title>THE WHITE TIGER — Eat, Drink & Chill</title>
   
-  <!-- Tailwind CSS & Fonts -->
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,6 @@
     :root {
       --brand-orange: #ff5a1f;
       --brand-orange-hover: #e04810;
-      --brand-orange-light: #fff3ee;
       --brand-dark: #191614;
       --bg-cream: #faf7f2;
       --card-white: #ffffff;
@@ -52,7 +51,7 @@
       transform: scale(0.96);
     }
     .glass-nav {
-      background: rgba(250, 247, 242, 0.94);
+      background: rgba(250, 247, 242, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-warm);
@@ -75,13 +74,6 @@
       color: #ffffff;
       box-shadow: 0 4px 12px rgba(25, 22, 20, 0.15);
     }
-    @keyframes pulseSoft {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    .animate-pulse-soft {
-      animation: pulseSoft 2.5s ease-in-out infinite;
-    }
     @keyframes spinDice {
       0% { transform: rotate(0deg) scale(1); }
       50% { transform: rotate(180deg) scale(1.15); }
@@ -101,7 +93,6 @@
       <!-- Top Row: Logo, Brand & Refresh Button -->
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2.5">
-          <!-- Fun Friendly White Tiger Emblem -->
           <div class="w-12 h-12 rounded-2xl bg-[#191614] text-white flex items-center justify-center text-2xl shadow-md border-2 border-orange-500/30 shrink-0">
             🐯
           </div>
@@ -142,7 +133,7 @@
             <span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-extrabold">Self-Servis</span>
           </div>
           <p class="text-[11px] text-stone-600 mt-0.5 leading-snug">
-            Beğendiğin ürünleri seç, siparişini kasadan ver. Hazır olunca teslim al, rahatına bak.
+            Beğendiğin lezzetleri seç, siparişini kasadan ver. Hazır olunca teslim al, rahatına bak.
           </p>
         </div>
       </div>
@@ -151,7 +142,7 @@
       <div class="flex items-center justify-between text-xs text-stone-500 px-1 pt-0.5">
         <span class="font-bold text-stone-800 flex items-center gap-1.5">
           <span>👋</span>
-          <span>Hoş geldin! Açsan doğru yerdesin.</span>
+          <span>Hoş geldin! Açsan doğru yerdesin. 🐯</span>
         </span>
         <span class="text-[11px] text-orange-600 font-extrabold bg-orange-50 px-2 py-0.5 rounded-lg border border-orange-200">
           Taze & Sıcak
@@ -171,28 +162,31 @@
         <input
           id="search-input"
           type="text"
-          placeholder="Burger, patates, kruvasan veya kahve ara..."
+          placeholder="Patso, burger, makarna, pizza veya salata ara..."
           class="w-full pl-10 pr-9 py-2.5 bg-white border border-stone-200 rounded-2xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all shadow-sm font-medium"
         />
         <button id="search-clear" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-stone-100 text-stone-500 hover:text-stone-900 flex items-center justify-center text-xs">✕</button>
       </div>
 
-      <!-- Quick Group Filters (All / Food / Coffee / Drinks / Dessert) -->
+      <!-- Quick Group Filters (All / Pasta / Burger / Plate & Pizza / Salad / Drink) -->
       <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="group-filters">
         <button onclick="setMainGroup('all')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all pill-active" data-group="all">
           🌟 Tümü
         </button>
-        <button onclick="setMainGroup('food')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="food">
-          🍔 Doyurucu Yemekler
+        <button onclick="setMainGroup('pasta')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="pasta">
+          🍝 Makarnalar
         </button>
-        <button onclick="setMainGroup('coffee')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="coffee">
-          ☕ Kahveler
+        <button onclick="setMainGroup('burger')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="burger">
+          🍔 Burger & Patso
+        </button>
+        <button onclick="setMainGroup('plate')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="plate">
+          🍕 Tabaklar & Pizza
+        </button>
+        <button onclick="setMainGroup('salad')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="salad">
+          🥗 Salatalar
         </button>
         <button onclick="setMainGroup('drink')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="drink">
-          🍹 Soğuk & Kokteyl
-        </button>
-        <button onclick="setMainGroup('dessert')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="dessert">
-          🍰 Tatlılar
+          ⚡ İçecekler
         </button>
       </div>
 
@@ -216,10 +210,10 @@
         <div class="min-w-0">
           <div class="text-xs font-black text-amber-300 flex items-center gap-1.5">
             <span>Ne yesem bilemedin mi?</span>
-            <span class="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded font-bold">Öğrenci Rehberi</span>
+            <span class="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded font-bold">Günün Tavsiyesi</span>
           </div>
           <p class="text-[11px] text-stone-300 truncate mt-0.5">
-            Tıkla, Kaplan senin için günün lezzetini seçsin! 🐯
+            Tıkla, Kaplan senin için günün menüsünden seçsin! 🐯
           </p>
         </div>
       </div>
@@ -238,10 +232,10 @@
           <span class="text-base">🔥</span>
           <h2 class="text-sm font-black text-stone-900 tracking-tight">Kampüsün Gözdeleri</h2>
           <span class="text-[10px] bg-orange-100 text-orange-700 font-extrabold px-2 py-0.5 rounded-full">
-            En Çok Sevilenler
+            Öğrenci Favorisi
           </span>
         </div>
-        <span class="text-[11px] text-stone-400 font-medium">Öğrenci Favorisi</span>
+        <span class="text-[11px] text-stone-400 font-medium">En Çok Satanlar</span>
       </div>
 
       <!-- Horizontal Swipeable Favorites Carousel -->
@@ -268,7 +262,7 @@
     <div class="space-y-1">
       <h3 class="text-sm font-black text-stone-900 tracking-wide uppercase">The White Tiger</h3>
       <p class="text-xs text-stone-500 max-w-xs mx-auto font-medium">
-        Tüm lezzetlerimiz günlük taze malzemelerle hazırlanır.
+        Tüm lezzetlerimiz siparişinle birlikte taze ve sıcak hazırlanır.
       </p>
       <p class="text-[11px] text-orange-600 font-bold pt-1">
         ⚡ Sipariş kasadan, teslimat tezgahtan. Afiyet olsun!
@@ -375,23 +369,23 @@
   <!-- SCRIPT DATA & APP LOGIC -->
   <script>
     // Embedded Store Data
-    const MENU_DATA = [{"id":17,"name":"Şefin Gurme Tabakları","icon":"CookingPot","color":"red","printer_target":"bar","sort_order":1,"description":"Önce karnımızı doyuralım. 🍽️ Paylaşmalık çıtırlar & doyurucu lezzetler","restaurant_id":2,"icon_emoji":"🍽️","witty_tag":"Önce karnımızı doyuralım. 🍽️","group":"food","products":[{"id":265,"category_id":17,"name":"Trüf Yağlı & Parmesanlı Patates","price":180,"vat_rate":10,"description":"Altın sarısı çıtır patates, beyaz trüf yağı, rendelenmiş eski parmesan ve trüflü dip mayonez","is_active":1,"image_url":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&auto=format&fit=crop&q=80","calories":"410 kcal","restaurant_id":2},{"id":266,"category_id":17,"name":"Mini Gurme Burger Trio (3 Adet)","price":340,"vat_rate":10,"description":"Mini brioche ekmeğinde karamelize soğan, eritilmiş cheddar ve trüflü soslu ev yapımı mini köfteler","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80","calories":"680 kcal","restaurant_id":2},{"id":267,"category_id":17,"name":"Burrata & Domates Carpaccio","price":310,"vat_rate":10,"description":"Taze manda burrata peyniri, salkım domates dilimleri, ev yapımı fesleğen pesto ve balsamik glaze","is_active":1,"image_url":"https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=600&auto=format&fit=crop&q=80","calories":"420 kcal","restaurant_id":2}]},{"id":15,"name":"Gurme Kruvasan & Kahvaltı","icon":"UtensilsCrossed","color":"yellow","printer_target":"bar","sort_order":2,"description":"Güne sağlam başla, dersi kaçırma. 🥐 Fransız tereyağlı kruvasanlar & kahvaltı","restaurant_id":2,"icon_emoji":"🥐","witty_tag":"Güne sağlam başla, dersi kaçırma. 🥐","group":"food","products":[{"id":256,"category_id":15,"name":"Somon Füme & Avokadolu Kruvasan","price":295,"vat_rate":10,"description":"Fransız tereyağlı çıtır kruvasan, labne kreması, Norveç somonu, avokado ve kapari","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80","calories":"480 kcal","restaurant_id":2},{"id":257,"category_id":15,"name":"Trüflü Çırpılmış Yumurtalı Kruvasan","price":260,"vat_rate":10,"description":"Kruvasan arasında taze trüf yağı aromalı kremsi çırpılmış yumurta ve frenk soğanı","is_active":1,"image_url":"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80","calories":"450 kcal","restaurant_id":2},{"id":258,"category_id":15,"name":"Avokado Poşe Yumurta Tartine","price":250,"vat_rate":10,"description":"Ekşi mayalı ekmek üzerinde limonlu avokado ezmesi, organik poşe yumurta ve pul biber","is_active":1,"image_url":"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80","calories":"380 kcal","restaurant_id":2},{"id":259,"category_id":15,"name":"Granola & Orman Meyveli Acai Bowl","price":220,"vat_rate":10,"description":"Fırınlanmış fındıklı granola, süzme yoğurt bazı, chia tohumu ve taze orman meyveleri","is_active":1,"image_url":"https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600&auto=format&fit=crop&q=80","calories":"320 kcal","restaurant_id":2}]},{"id":16,"name":"Lüks Tatlılar & Patisserie","icon":"Cake","color":"pink","printer_target":"bar","sort_order":3,"description":"Tatlıya her zaman yer var! 🍰 Günün yorgunluğunu unutturan el yapımı tatlılar","restaurant_id":2,"icon_emoji":"🍰","witty_tag":"Tatlıya her zaman yer var! 🍰","group":"dessert","products":[{"id":260,"category_id":16,"name":"San Sebastian Cheesecake","price":210,"vat_rate":10,"description":"İçi akışkan fırınlanmış Bask peynirli kek, ılık eritilmiş Callebaut Belçika çikolatası eşliğinde","is_active":1,"image_url":"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600&auto=format&fit=crop&q=80","calories":"520 kcal","restaurant_id":2},{"id":261,"category_id":16,"name":"Dubai Çikolatalı Kruvasan","price":250,"vat_rate":10,"description":"Çıtır kruvasan içine Antep fıstığı kreması ve çıtır kadayıf dolgusu, çikolata kaplama","is_active":1,"image_url":"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&auto=format&fit=crop&q=80","calories":"590 kcal","restaurant_id":2},{"id":262,"category_id":16,"name":"Lotus Biscoff Dream Cheesecake","price":195,"vat_rate":10,"description":"Yoğun karamelize Lotus kreması, mascarpone ve kıtır bisküvi tabanı","is_active":1,"image_url":"https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&auto=format&fit=crop&q=80","calories":"490 kcal","restaurant_id":2},{"id":263,"category_id":16,"name":"Klasik İtalyan Tiramisu","price":190,"vat_rate":10,"description":"Espresso ile ıslatılmış savoiardi bisküvileri, kremsi mascarpone ve ham kakao","is_active":1,"image_url":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&auto=format&fit=crop&q=80","calories":"380 kcal","restaurant_id":2},{"id":264,"category_id":16,"name":"Paris-Brest Praliné","price":200,"vat_rate":10,"description":"Geleneksel choux hamuru, kavrulmuş fındıklı pralin krema ve file badem","is_active":1,"image_url":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80","calories":"440 kcal","restaurant_id":2}]},{"id":11,"name":"Specialty Kahveler & Sıcak Bar","icon":"Coffee","color":"amber","printer_target":"bar","sort_order":4,"description":"Final haftasının gizli kahramanları. ☕ Taze single origin çekirdekler","restaurant_id":2,"icon_emoji":"☕","witty_tag":"Final haftasının gizli kahramanları. ☕","group":"coffee","products":[{"id":237,"category_id":11,"name":"White Tiger Signature Latte","price":135,"vat_rate":10,"description":"Özel espresso harmanı, kadifemsi buharda süt, beyaz çikolata esansı ve yenilebilir altın tozu dokunuşu","is_active":1,"image_url":"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&auto=format&fit=crop&q=80","calories":"220 kcal","restaurant_id":2},{"id":238,"category_id":11,"name":"Cortado Reserve","price":110,"vat_rate":10,"description":"Duble ristretto espresso ve eşit oranda ipeksi süt kreması","is_active":1,"image_url":"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80","calories":"95 kcal","restaurant_id":2},{"id":239,"category_id":11,"name":"Flat White","price":120,"vat_rate":10,"description":"Mikro köpüklü buharda süt ile çift shot taze espresso buluşması","is_active":1,"image_url":"https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=600&auto=format&fit=crop&q=80","calories":"140 kcal","restaurant_id":2},{"id":240,"category_id":11,"name":"V60 Single Origin Drip","price":140,"vat_rate":10,"description":"Hafif narenciye ve yasemin notalarına sahip Etiyopya Yirgacheffe çekirdekleri","is_active":1,"image_url":"https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&auto=format&fit=crop&q=80","calories":"5 kcal","restaurant_id":2},{"id":241,"category_id":11,"name":"Chemex Artisan Brew (2 Kişilik)","price":220,"vat_rate":10,"description":"Pürüzsüz gövde ve berrak aromatik bitiş sunan özel filtre kahve deneyimi","is_active":1,"image_url":"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop&q=80","calories":"10 kcal","restaurant_id":2},{"id":242,"category_id":11,"name":"Spanish Latte","price":130,"vat_rate":10,"description":"Kondanse süt, taze duble espresso ve hafif tarçın dokunuşu","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&auto=format&fit=crop&q=80","calories":"240 kcal","restaurant_id":2},{"id":243,"category_id":11,"name":"Sıcak Belçika Çikolatası","price":145,"vat_rate":10,"description":"Gerçek eritilmiş Callebaut Belçika çikolatası ve vanilyalı krema","is_active":1,"image_url":"https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=600&auto=format&fit=crop&q=80","calories":"310 kcal","restaurant_id":2}]},{"id":12,"name":"Soğuk Kahveler & Cold Brew","icon":"GlassWater","color":"blue","printer_target":"bar","sort_order":5,"description":"Kafayı toparla, buz gibi serinle. 🧊 24 saat damıtılmış cold brew & buzlu spesiyaller","restaurant_id":2,"icon_emoji":"🧊","witty_tag":"Kafayı toparla, buz gibi serinle. 🧊","group":"coffee","products":[{"id":244,"category_id":12,"name":"White Tiger Cold Brew Reserve","price":140,"vat_rate":10,"description":"24 saat yavaş damıtılmış single origin kahve, portakal kabuğu bükümü ile buzlu servis","is_active":1,"image_url":"https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&auto=format&fit=crop&q=80","calories":"10 kcal","restaurant_id":2},{"id":245,"category_id":12,"name":"Iced Salted Caramel Latte","price":135,"vat_rate":10,"description":"Ev yapımı deniz tuzlu karamel, duble espresso ve soğuk süt","is_active":1,"image_url":"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&auto=format&fit=crop&q=80","calories":"210 kcal","restaurant_id":2},{"id":246,"category_id":12,"name":"Iced White Mocha","price":135,"vat_rate":10,"description":"Duble espresso, kremsi beyaz çikolata sosu ve buzlu taze süt","is_active":1,"image_url":"https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&auto=format&fit=crop&q=80","calories":"250 kcal","restaurant_id":2},{"id":247,"category_id":12,"name":"Affogato Al Caffe","price":140,"vat_rate":10,"description":"Artizan vanilyalı İtalyan gelato üzerine dökülen sıcak espresso shot","is_active":1,"image_url":"https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=600&auto=format&fit=crop&q=80","calories":"190 kcal","restaurant_id":2},{"id":248,"category_id":12,"name":"Tonic Espresso Cooler","price":145,"vat_rate":10,"description":"Buzlu premium tonik, taze sıkılmış misket limonu suyu ve yüzen espresso katmanı","is_active":1,"image_url":"https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?w=600&auto=format&fit=crop&q=80","calories":"75 kcal","restaurant_id":2}]},{"id":14,"name":"İmzalı Mocktail & Eliksirler","icon":"Wine","color":"purple","printer_target":"bar","sort_order":6,"description":"Bir şeyler içmeden olmaz. 🍹 Taze meyveli mocktail & ferahlatıcı eliksirler","restaurant_id":2,"icon_emoji":"🍹","witty_tag":"Bir şeyler içmeden olmaz. 🍹","group":"drink","products":[{"id":253,"category_id":14,"name":"The White Tiger Gold Elixir","price":175,"vat_rate":10,"description":"Çarkıfelek (passion fruit) püresi, ananas suyu, zencefil gazozu ve altın ışıltısı","is_active":1,"image_url":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80","calories":"130 kcal","restaurant_id":2},{"id":254,"category_id":14,"name":"Blackberry Basil Smash","price":165,"vat_rate":10,"description":"Taze böğürtlen, ezilmiş fesleğen yaprakları, misket limonu ve maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&auto=format&fit=crop&q=80","calories":"90 kcal","restaurant_id":2},{"id":255,"category_id":14,"name":"Virgin Mojito Royale","price":155,"vat_rate":10,"description":"Taze nane, misket limonu dilimleri, esmer şeker ve buzlu dağ sodası","is_active":1,"image_url":"https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80","calories":"85 kcal","restaurant_id":2}]},{"id":13,"name":"Artisan Çaylar & Matcha","icon":"Sparkles","color":"emerald","printer_target":"bar","sort_order":7,"description":"Biraz huzur, biraz odaklanma. 🍵 Uji Japon seremoniyel matcha & bitki infüzyonları","restaurant_id":2,"icon_emoji":"🍵","witty_tag":"Biraz huzur, biraz odaklanma. 🍵","group":"drink","products":[{"id":249,"category_id":13,"name":"Ceremonial Matcha Latte","price":150,"vat_rate":10,"description":"Geleneksel Japon seremoniyel matcha, badem sütü ve hafif vanilya dengesi","is_active":1,"image_url":"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=600&auto=format&fit=crop&q=80","calories":"140 kcal","restaurant_id":2},{"id":250,"category_id":13,"name":"Chai Tea Latte Spice","price":135,"vat_rate":10,"description":"Kakule, tarçın, zencefil, karanfil baharatları ile demlenmiş kadife kıvamlı süt","is_active":1,"image_url":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&auto=format&fit=crop&q=80","calories":"180 kcal","restaurant_id":2},{"id":251,"category_id":13,"name":"Berry Hibiscus Cooler","price":125,"vat_rate":10,"description":"Doğal hibiskus çiçeği özü, taze yaban mersini ve buzlu ferahlatıcı nane","is_active":1,"image_url":"https://images.unsplash.com/photo-1556881286-fc6915169721?w=600&auto=format&fit=crop&q=80","calories":"65 kcal","restaurant_id":2},{"id":252,"category_id":13,"name":"Yasemin İncileri Yeşil Çay","price":120,"vat_rate":10,"description":"Elle toplanıp sarılmış çiçek kokulu Çin yeşil çayı","is_active":1,"image_url":"https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?w=600&auto=format&fit=crop&q=80","calories":"0 kcal","restaurant_id":2}]}];
+    const MENU_DATA = [{"id":18,"name":"Makarnalar","icon":"UtensilsCrossed","color":"amber","printer_target":"kitchen","sort_order":1,"description":"Taze İtalyan sosları ve al dente lezzetler 🍝","restaurant_id":2,"icon_emoji":"🍝","witty_tag":"Önce karnımızı doyuralım. 🍝","group":"pasta","products":[{"id":268,"category_id":18,"name":"Spagetti Napolitan","price":170,"vat_rate":10,"description":"Fesleğenli taze domates sosu, zeytinyağı ve rendelenmiş peynir ile klasik Napoli spagettisi","is_active":1,"image_url":"https://images.unsplash.com/photo-1621996346565-e3d5d62817ee?w=800&auto=format&fit=crop&q=80","calories":"480 kcal","restaurant_id":2},{"id":269,"category_id":18,"name":"Sebzeli Penne","price":200,"vat_rate":10,"description":"Sotelenmiş taze mevsim sebzeleri, zeytinyağı, hafif domates sosu ve Akdeniz baharatları","is_active":1,"image_url":"https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=800&auto=format&fit=crop&q=80","calories":"440 kcal","restaurant_id":2},{"id":270,"category_id":18,"name":"Penne Alfredo","price":230,"vat_rate":10,"description":"Zengin krema, sotelenmiş mantar dilimleri, tavuk parçaları ve rendelenmiş parmesan peyniri","is_active":1,"image_url":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&auto=format&fit=crop&q=80","calories":"620 kcal","restaurant_id":2},{"id":271,"category_id":18,"name":"Penne Köri","price":230,"vat_rate":10,"description":"Hafif baharatlı kremsi köri sosu, marine edilmiş sulu tavuk dilimleri ve taze yeşillik","is_active":1,"image_url":"https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800&auto=format&fit=crop&q=80","calories":"610 kcal","restaurant_id":2},{"id":272,"category_id":18,"name":"Fettuccine Alfredo","price":250,"vat_rate":10,"description":"Geleneksel İtalyan yassı makarna, yoğun kremalı mantar ve tavuk sosu, parmesan dokunuşu","is_active":1,"image_url":"https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=800&auto=format&fit=crop&q=80","calories":"660 kcal","restaurant_id":2},{"id":273,"category_id":18,"name":"Spagetti Bolonez","price":250,"vat_rate":10,"description":"Ağır ateşte pişmiş dana kıymalı geleneksel domates sosu, fesleğen ve rendelenmiş peynir","is_active":1,"image_url":"https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=800&auto=format&fit=crop&q=80","calories":"590 kcal","restaurant_id":2}]},{"id":19,"name":"Burger & Atıştırmalıklar","icon":"Sandwich","color":"orange","printer_target":"kitchen","sort_order":2,"description":"Sokak lezzetleri, çıtır patso ve efsane burgerler 🍔","restaurant_id":2,"icon_emoji":"🍔","witty_tag":"Kampüsün vazgeçilmezleri. 🍔","group":"burger","products":[{"id":274,"category_id":19,"name":"Patso","price":140,"vat_rate":10,"description":"Çıtır yarım ekmek arasında bol altın sarısı patates kızartması, ketçap ve mayonez lezzeti","is_active":1,"image_url":"https://i.lezzet.com.tr/images-xxlarge-recipe/patso-b25615d5-4a9a-48f2-8be8-fe50da2cca3e.jpg","calories":"540 kcal","restaurant_id":2},{"id":275,"category_id":19,"name":"Tost + Çay","price":150,"vat_rate":10,"description":"Eriyen bol kaşarlı veya karışık çıtır tost, yanında taze demlenmiş sıcacık bardak çay ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/161895/161895-1250x833.jpg","calories":"420 kcal","restaurant_id":2},{"id":276,"category_id":19,"name":"Tavuk Tantuni","price":200,"vat_rate":10,"description":"Özel sacda incecik kıyılmış tavuk eti, sumaklı soğan, maydanoz, domates ve yumuşacık lavaş dürüm","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/100113/100113-1250x833.jpg","calories":"490 kcal","restaurant_id":2},{"id":277,"category_id":19,"name":"Klasik Burger / Hamburger","price":220,"vat_rate":10,"description":"120g ızgara dana burger köftesi, marul, turşu, domates ve nefis burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80","calories":"580 kcal","restaurant_id":2},{"id":278,"category_id":19,"name":"Antakya Döner","price":250,"vat_rate":10,"description":"Özel salçalı sarımsaklı sosuyla marine tavuk döner, patates kızartması ve kızarmış Hatay lavaşı","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/22759/22759-1250x833.jpg","calories":"560 kcal","restaurant_id":2},{"id":279,"category_id":19,"name":"Köfte Ekmek","price":250,"vat_rate":10,"description":"Izgara kasap köfteleri, taze ekmek arasında sumaklı soğan, köz biber, domates ve baharatlar","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/167017/167017-1250x833.jpg","calories":"610 kcal","restaurant_id":2},{"id":280,"category_id":19,"name":"Baba Burger","price":275,"vat_rate":10,"description":"Doyurucu çift köfte, duble eritilmiş cheddar peyniri, karamelize soğan ve şefin özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&auto=format&fit=crop&q=80","calories":"780 kcal","restaurant_id":2}]},{"id":20,"name":"Tabak Yemekleri & Pizzalar","icon":"CookingPot","color":"red","printer_target":"kitchen","sort_order":3,"description":"Doyurucu ana yemek tabakları ve çıtır fırın pizza 🍕","restaurant_id":2,"icon_emoji":"🍕","witty_tag":"Dolu dolu tabaklar & fırın lezzetleri 🍽️","group":"plate","products":[{"id":281,"category_id":20,"name":"Çıtır Tavuk","price":200,"vat_rate":10,"description":"Altın sarısı panelenmiş çıtır tavuk parçaları, patates kızartması ve özel dip soslar","is_active":1,"image_url":"https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop&q=80","calories":"580 kcal","restaurant_id":2},{"id":282,"category_id":20,"name":"Tavuk Pilav Salata","price":250,"vat_rate":10,"description":"Geleneksel lezzet; tereyağlı tane pirinç pilavı, tiftik tavuk eti ve taze mevsim salatası","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/255612/255612-1250x833.jpg","calories":"590 kcal","restaurant_id":2},{"id":283,"category_id":20,"name":"Makarna Tavuk Salata","price":250,"vat_rate":10,"description":"Özel marine tavuk dilimleri, enfes tereyağlı makarna ve Akdeniz yeşillikleri tabağı","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/239284/239284-1250x833.jpg","calories":"650 kcal","restaurant_id":2},{"id":284,"category_id":20,"name":"Tavuk Izgara","price":260,"vat_rate":10,"description":"Közde marine edilmiş yumuşacık tavuk göğsü fileto, yanında pilav ve közlenmiş sebzeler ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/174740/174740-1250x833.jpg","calories":"520 kcal","restaurant_id":2},{"id":285,"category_id":20,"name":"Karışık Pizza","price":270,"vat_rate":10,"description":"İnce çıtır hamur, özel domates sosu, mozzarella, sucuk, sosis, mantar, mısır, zeytin ve biber","is_active":1,"image_url":"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=80","calories":"720 kcal","restaurant_id":2}]},{"id":21,"name":"Salatalar","icon":"Salad","color":"emerald","printer_target":"kitchen","sort_order":4,"description":"Günlük taze yeşillikler ve hafif sağlıklı öğünler 🥗","restaurant_id":2,"icon_emoji":"🥗","witty_tag":"Taze, çıtır ve hafif kaçamaklar 🥗","group":"salad","products":[{"id":286,"category_id":21,"name":"Sezar Salata","price":230,"vat_rate":10,"description":"Taze göbek marul, ızgara tavuk dilimleri, baharatlı kruton ekmek, parmesan ve özel Sezar sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=800&auto=format&fit=crop&q=80","calories":"390 kcal","restaurant_id":2},{"id":287,"category_id":21,"name":"Ton Balıklı Salata","price":250,"vat_rate":10,"description":"Akdeniz yeşillikleri, lezzetli ton balığı parçaları, tatlı mısır, çeri domates ve limon-zeytinyağı sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80","calories":"340 kcal","restaurant_id":2}]},{"id":22,"name":"İçecekler","icon":"GlassWater","color":"blue","printer_target":"kitchen","sort_order":5,"description":"Buz gibi enerji ve ferahlatıcı içecekler 🥤","restaurant_id":2,"icon_emoji":"⚡","witty_tag":"Bir şeyler içmeden olmaz. 🥤","group":"drink","products":[{"id":288,"category_id":22,"name":"Red Bull (Energy Drink / Sugarfree / Peach)","price":100,"vat_rate":10,"description":"250ml buz gibi kutu Red Bull enerji içeceği; Classic, Sugarfree veya Peach Edition seçenekleriyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1613218222876-954978a4404e?w=800&auto=format&fit=crop&q=80","calories":"115 kcal","restaurant_id":2}]}];
     const RESTAURANT = {"id":2,"name":"THE WHITE TIGER","slug":"the-white-tiger","slogan":"Eat, Drink & Chill • Kampüsün Buluşma Noktası","logo_url":"","theme_color":"gold","qr_url":"https://shyrianx.github.io/makarna-evi/the-white-tiger.html","created_at":"2026-11-07 18:50:28"};
     const SETTINGS = {"wifi_name":"","wifi_password":"","currency":"₺"};
-    const BUILD_TIMESTAMP = 1794079149844;
+    const BUILD_TIMESTAMP = 1794079520092;
 
-    let activeGroupId = 'all'; // 'all', 'food', 'coffee', 'drink', 'dessert'
+    let activeGroupId = 'all'; // 'all', 'pasta', 'burger', 'plate', 'salad', 'drink'
     let activeCategoryId = null;
     let searchQuery = '';
 
-    // Student Favorites (Handpicked top dishes from current DB products)
+    // Student Favorites (Highlighted real items from current catalog)
     const FAVORITE_NAMES = [
-      'Mini Gurme Burger Trio (3 Adet)',
-      'Trüf Yağlı & Parmesanlı Patates',
-      'Somon Füme & Avokadolu Kruvasan',
-      'San Sebastian Cheesecake',
-      'White Tiger Signature Latte',
-      'White Tiger Cold Brew Reserve'
+      'Patso',
+      'Baba Burger',
+      'Tavuk Tantuni',
+      'Fettuccine Alfredo',
+      'Tavuk Pilav Salata',
+      'Red Bull (Energy Drink / Sugarfree / Peach)'
     ];
 
     // Find all products in flat array
@@ -448,7 +442,7 @@
       }).join('');
     }
 
-    // Main Group Filter (All / Food / Coffee / Drinks / Dessert)
+    // Main Group Filter
     function setMainGroup(group) {
       activeGroupId = group;
       activeCategoryId = null;
@@ -472,11 +466,7 @@
 
       const filteredCategories = MENU_DATA.filter(cat => {
         if (activeGroupId === 'all') return true;
-        if (activeGroupId === 'food') return cat.group === 'food';
-        if (activeGroupId === 'coffee') return cat.group === 'coffee';
-        if (activeGroupId === 'drink') return cat.group === 'drink';
-        if (activeGroupId === 'dessert') return cat.group === 'dessert';
-        return true;
+        return cat.group === activeGroupId;
       });
 
       nav.innerHTML = filteredCategories.map(cat => {
@@ -528,7 +518,6 @@
       const q = searchQuery.toLowerCase().trim();
 
       const filteredCategories = MENU_DATA.map(cat => {
-        // Group filter
         if (activeGroupId !== 'all' && cat.group !== activeGroupId) {
           return { ...cat, products: [] };
         }
@@ -546,7 +535,7 @@
             <div class="text-5xl">🐯</div>
             <div class="text-base font-black text-stone-900">Kaplan aradı ama bulamadı. 🐯</div>
             <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
-              "${searchQuery}" aramasına uygun bir ürün bulamadık. Bir harf hatası olabilir mi? Ya da menüdeki diğer güzelliklere göz atabilirsin!
+              "${searchQuery}" aramasına uygun bir ürün bulamadık. Bir harf hatası olabilir mi? Ya da menüdeki diğer lezzetlere göz atabilirsin!
             </p>
             <button onclick="clearSearch()" class="mt-2 px-4 py-2 rounded-xl orange-gradient text-white font-black text-xs tap-bounce shadow-md">
               Aramayı Temizle
@@ -571,7 +560,7 @@
                   </div>
                 </div>
                 <span class="text-xs text-stone-500 font-extrabold bg-stone-100 px-2 py-0.5 rounded-lg">
-                  ${cat.products.length} Lezzet
+                  ${cat.products.length} Çeşit
                 </span>
               </div>
               ${cat.description ? `<p class="text-[11px] text-stone-500 mt-1 font-medium">${cat.description}</p>` : ''}
@@ -668,7 +657,7 @@
       'Açlığını erteleme, ders öncesi sağlam bir enerji depola! ⚡',
       'Vizelerin ilacı, günün en lezzetli kararı! 🎯',
       'Arkadaşlarınla paylaş ya da tek başına zevkini çıkar! 🐯',
-      'Bunu kaçırırsan arkandan ağlar, hemen kasaya koş! 🏃‍♂️',
+      'Bunu kaçırırsan pişman olursun, hemen kasaya koş! 🏃‍♂️',
       'Ders arası keyfin zirvesi, tam da aradığın şey! ✨'
     ];
 
@@ -697,7 +686,7 @@
       rm.classList.remove('hidden');
     }
 
-    function closeRandomModal(e) {
+    function closeRandomModal() {
       const rm = document.getElementById('random-modal');
       if (rm) rm.classList.add('hidden');
     }
