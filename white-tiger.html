@@ -48,12 +48,12 @@
       transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .tap-bounce:active {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .glass-nav {
-      background: rgba(250, 247, 242, 0.95);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(250, 247, 242, 0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border-warm);
     }
     .food-card {
@@ -63,16 +63,17 @@
     }
     .food-card:hover {
       border-color: #fdb89a;
-      box-shadow: 0 8px 20px rgba(255, 90, 31, 0.08);
+      box-shadow: 0 8px 24px rgba(255, 90, 31, 0.08);
       transform: translateY(-2px);
     }
     .orange-gradient {
       background: linear-gradient(135deg, #ff6b35 0%, #ff5a1f 50%, #e04810 100%);
     }
-    .pill-active {
-      background: #191614;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(25, 22, 20, 0.15);
+    .chip-active {
+      background: #191614 !important;
+      color: #ffffff !important;
+      border-color: #191614 !important;
+      box-shadow: 0 4px 14px rgba(25, 22, 20, 0.2) !important;
     }
     @keyframes spinDice {
       0% { transform: rotate(0deg) scale(1); }
@@ -82,79 +83,101 @@
     .animate-dice {
       animation: spinDice 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body class="min-h-screen pb-24 select-none">
 
-  <!-- TOP HERO & WELCOMING -->
-  <header class="relative bg-gradient-to-b from-[#fff5f0] via-[#faf7f2] to-[#faf7f2] pt-5 pb-4 px-4 border-b border-[#ece6dc]/60">
-    <div class="max-w-md mx-auto space-y-3.5">
+  <!-- ======================================================== -->
+  <!-- 1. HEADER & BRAND BAR -->
+  <!-- ======================================================== -->
+  <header class="relative bg-gradient-to-b from-[#fff6f0] via-[#faf7f2] to-[#faf7f2] pt-4 pb-3 px-4 border-b border-[#ece6dc]/70">
+    <div class="max-w-md mx-auto space-y-3">
       
       <!-- Top Row: Logo, Brand & Refresh Button -->
       <div class="flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2.5">
-          <div class="w-12 h-12 rounded-2xl bg-[#191614] text-white flex items-center justify-center text-2xl shadow-md border-2 border-orange-500/30 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-11 h-11 rounded-2xl bg-[#191614] text-white flex items-center justify-center text-2xl shadow-md border-2 border-orange-500/30 shrink-0">
             🐯
           </div>
-          <div>
+          <div class="min-w-0">
             <div class="flex items-center gap-1.5">
-              <h1 class="text-lg font-black tracking-tight text-stone-900 leading-none">
+              <h1 class="text-lg font-black tracking-tight text-stone-900 leading-none truncate">
                 THE WHITE TIGER
               </h1>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-extrabold uppercase">
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-extrabold uppercase shrink-0">
                 Kampüs & Cafe
               </span>
             </div>
-            <p class="text-xs text-stone-500 font-medium mt-1">
-              Eat, Drink & Chill • Arkadaşların Buluşma Noktası
+            <p class="text-[11px] text-stone-500 font-medium mt-0.5 truncate">
+              Eat, Drink & Chill • Kampüsün Buluşma Noktası
             </p>
           </div>
         </div>
 
-        <!-- Refresh Button (Cache-buster) -->
+        <!-- Refresh Button -->
         <button 
           onclick="forceRefreshMenu()" 
           title="Menüyü Güncelle" 
           class="tap-bounce flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-600 hover:text-orange-600 hover:border-orange-300 text-xs font-semibold shadow-sm transition-all shrink-0"
         >
-          <span class="text-orange-500 text-sm">↻</span>
+          <span class="text-orange-500 text-sm leading-none">↻</span>
           <span class="text-[11px] font-bold">Yenile</span>
         </button>
       </div>
 
-      <!-- SEMPATİK VE NET SELF-SERVİS BİLGİLENDİRMESİ -->
-      <div class="bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 border border-orange-500/25 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-        <div class="w-10 h-10 rounded-xl orange-gradient text-white flex items-center justify-center font-black text-lg shadow-md shadow-orange-500/20 shrink-0">
-          ⚡
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-xs font-black text-stone-900 flex items-center gap-2 flex-wrap">
-            <span>Sipariş kasadan, keyif senden! 🐯</span>
-            <span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-extrabold">Self-Servis</span>
+      <!-- ======================================================== -->
+      <!-- 2. KISA VE NET SELF-SERVİS BİLGİLENDİRMESİ -->
+      <!-- ======================================================== -->
+      <div class="bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 border border-orange-500/20 rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-xl orange-gradient text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+            ⚡
           </div>
-          <p class="text-[11px] text-stone-600 mt-0.5 leading-snug">
-            Beğendiğin lezzetleri seç, siparişini kasadan ver. Hazır olunca teslim al, rahatına bak.
-          </p>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black text-stone-900 truncate">Sipariş kasadan, keyif senden! 🐯</span>
+              <span class="text-[9px] bg-orange-500 text-white px-1.5 py-0.2 rounded-full font-extrabold uppercase shrink-0">Self-Servis</span>
+            </div>
+            <p class="text-[11px] text-stone-600 truncate mt-0.5">
+              Beğendiğin lezzeti seç, siparişini kasadan ver. Hazır olunca teslim al!
+            </p>
+          </div>
         </div>
       </div>
 
-      <!-- SAMİMİ KARŞILAMA SÖZÜ -->
-      <div class="flex items-center justify-between text-xs text-stone-500 px-1 pt-0.5">
+      <!-- ======================================================== -->
+      <!-- 3. SAMİMİ VE KISA KARŞILAMA SÖZÜ -->
+      <!-- ======================================================== -->
+      <div class="flex items-center justify-between text-xs text-stone-500 px-0.5">
         <span class="font-bold text-stone-800 flex items-center gap-1.5">
           <span>👋</span>
           <span>Hoş geldin! Açsan doğru yerdesin. 🐯</span>
         </span>
-        <span class="text-[11px] text-orange-600 font-extrabold bg-orange-50 px-2 py-0.5 rounded-lg border border-orange-200">
-          Taze & Sıcak
+        <span class="text-[10px] text-orange-600 font-extrabold bg-orange-50 px-2 py-0.5 rounded-lg border border-orange-200 shrink-0">
+          Taze & Sıcak Lezzetler
         </span>
       </div>
 
     </div>
   </header>
 
-  <!-- STICKY SEARCH & DYNAMIC QUICK FILTERS -->
-  <div class="sticky top-0 z-30 glass-nav shadow-md shadow-stone-900/5">
-    <div class="max-w-md mx-auto px-4 pt-3 pb-2.5 space-y-2.5">
+  <!-- ======================================================== -->
+  <!-- 4 & 5. STICKY SEARCH & TEK/NET KATEGORİ CHIP BAR -->
+  <!-- ======================================================== -->
+  <div class="sticky top-0 z-30 glass-nav shadow-sm">
+    <div class="max-w-md mx-auto px-4 pt-2.5 pb-2.5 space-y-2">
       
       <!-- Friendly Search Box -->
       <div class="relative">
@@ -163,99 +186,80 @@
           id="search-input"
           type="text"
           placeholder="Patso, burger, makarna, pizza veya salata ara..."
-          class="w-full pl-10 pr-9 py-2.5 bg-white border border-stone-200 rounded-2xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all shadow-sm font-medium"
+          class="w-full pl-9 pr-9 py-2 bg-white border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all shadow-sm font-medium"
         />
         <button id="search-clear" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-stone-100 text-stone-500 hover:text-stone-900 flex items-center justify-center text-xs">✕</button>
       </div>
 
-      <!-- Quick Group Filters (All / Burger / Pizza / Pasta / Plate / Salad / Drink) -->
-      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="group-filters">
-        <button onclick="setMainGroup('all')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all pill-active" data-group="all">
-          🌟 Tümü
-        </button>
-        <button onclick="setMainGroup('burger')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="burger">
-          🍔 Burgerler & Menüler
-        </button>
-        <button onclick="setMainGroup('pizza')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="pizza">
-          🍕 Pizza & Aperatif
-        </button>
-        <button onclick="setMainGroup('pasta')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="pasta">
-          🍝 Makarnalar
-        </button>
-        <button onclick="setMainGroup('plate')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="plate">
-          🍗 Tavuk Dünyası
-        </button>
-        <button onclick="setMainGroup('salad')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="salad">
-          🥗 Salatalar
-        </button>
-        <button onclick="setMainGroup('drink')" class="group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300" data-group="drink">
-          🥤 İçecekler
-        </button>
-      </div>
-
-      <!-- Smooth Category Pills (Horizontal Scrolling) -->
-      <nav id="category-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth" aria-label="Menü Kategorileri">
-        <!-- Injected dynamically via JS -->
+      <!-- TEK VE NET KATEGORİ CHIP BAR (Artık iki ayrı satır yok!) -->
+      <nav id="category-chips" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth" aria-label="Menü Kategorileri">
+        <!-- Injected dynamically via JS: [Tümü] + [Kategoriler] -->
       </nav>
 
     </div>
   </div>
 
-  <!-- INTERACTIVE "NE YESEM?" WIDGET & STUDENT FAVORITES SPOTLIGHT -->
-  <div class="max-w-md mx-auto px-4 mt-4 space-y-4">
+  <!-- ======================================================== -->
+  <!-- 6. "NE YESEM?" İNTERAKTİF SEÇİM & 7. KAMPÜSÜN GÖZDELERİ -->
+  <!-- ======================================================== -->
+  <div class="max-w-md mx-auto px-4 mt-3.5 space-y-4">
     
-    <!-- "Ne Yesem? 🎲 Şanslı Seçim" Button -->
-    <div class="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 text-white rounded-2xl p-3.5 shadow-md flex items-center justify-between gap-3 border border-stone-800">
-      <div class="flex items-center gap-3 min-w-0">
-        <div id="dice-icon" class="w-10 h-10 rounded-xl bg-stone-800 text-amber-400 flex items-center justify-center text-xl shrink-0 border border-stone-700 shadow-inner">
+    <!-- 6. "Bugün Ne Yesem? 🎲 Şanslı Seçim" -->
+    <div class="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 text-white rounded-2xl p-3 shadow-md flex items-center justify-between gap-2.5 border border-stone-800">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div id="dice-icon" class="w-9 h-9 rounded-xl bg-stone-800 text-amber-400 flex items-center justify-center text-lg shrink-0 border border-stone-700 shadow-inner">
           🎲
         </div>
         <div class="min-w-0">
           <div class="text-xs font-black text-amber-300 flex items-center gap-1.5">
             <span>Ne yesem bilemedin mi?</span>
-            <span class="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded font-bold">Günün Tavsiyesi</span>
+            <span class="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded font-bold">Tavsiye</span>
           </div>
           <p class="text-[11px] text-stone-300 truncate mt-0.5">
-            Tıkla, Kaplan senin için günün menüsünden seçsin! 🐯
+            Kaplan senin için günün lezzetini seçsin! 🐯
           </p>
         </div>
       </div>
       <button 
         onclick="pickRandomFood()" 
-        class="tap-bounce px-3.5 py-2 orange-gradient text-white rounded-xl text-xs font-black shadow-md shadow-orange-500/30 whitespace-nowrap active:scale-95 transition-all"
+        class="tap-bounce px-3 py-1.5 orange-gradient text-white rounded-xl text-xs font-black shadow-md shadow-orange-500/20 whitespace-nowrap shrink-0 active:scale-95 transition-all"
       >
         Bana Seç! 🎯
       </button>
     </div>
 
-    <!-- SPOTLIGHT: KAMPÜSÜN GÖZDELERİ (ÖĞRENCİ FAVORİLERİ) -->
-    <section class="space-y-2.5">
+    <!-- 7. SPOTLIGHT: KAMPÜSÜN GÖZDELERİ (ÖĞRENCİ FAVORİLERİ) -->
+    <section id="spotlight-section" class="space-y-2">
       <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="text-base">🔥</span>
-          <h2 class="text-sm font-black text-stone-900 tracking-tight">Kampüsün Gözdeleri</h2>
-          <span class="text-[10px] bg-orange-100 text-orange-700 font-extrabold px-2 py-0.5 rounded-full">
+        <div class="flex items-center gap-1.5">
+          <span class="text-sm">🔥</span>
+          <h2 class="text-xs font-black text-stone-900 tracking-tight">Kampüsün Gözdeleri</h2>
+          <span class="text-[9px] bg-orange-100 text-orange-700 font-extrabold px-1.5 py-0.2 rounded-full">
             Öğrenci Favorisi
           </span>
         </div>
         <span class="text-[11px] text-stone-400 font-medium">En Çok Satanlar</span>
       </div>
 
-      <!-- Horizontal Swipeable Favorites Carousel -->
-      <div id="favorites-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-1 snap-x scroll-smooth">
+      <!-- Horizontal Swipeable Favorites Carousel (Dengeli, 3. kart hafif görünecek şekilde) -->
+      <div id="favorites-container" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-1 snap-x scroll-smooth -mx-4 px-4">
         <!-- Injected via JavaScript from real products -->
       </div>
     </section>
 
   </div>
 
-  <!-- MAIN MENU SECTION -->
-  <main id="menu-container" class="max-w-md mx-auto px-4 mt-6 space-y-8">
+  <!-- ======================================================== -->
+  <!-- 8. KATEGORİ BAZLI ANA ÜRÜN LİSTESİ -->
+  <!-- ======================================================== -->
+  <main id="menu-container" class="max-w-md mx-auto px-4 mt-6 space-y-7">
     <!-- Injected dynamically via JS -->
   </main>
 
+  <!-- ======================================================== -->
   <!-- FOOTER -->
-  <footer class="max-w-md mx-auto px-4 mt-12 text-center border-t border-stone-200 pt-7 pb-10 space-y-3.5">
+  <!-- ======================================================== -->
+  <footer class="max-w-md mx-auto px-4 mt-12 text-center border-t border-stone-200/80 pt-6 pb-10 space-y-3">
     <div class="flex items-center justify-center gap-2">
       <div class="h-[1px] w-12 bg-stone-200"></div>
       <span class="text-orange-500 text-sm">🐯</span>
@@ -267,7 +271,7 @@
       <p class="text-xs text-stone-500 max-w-xs mx-auto font-medium">
         Tüm lezzetlerimiz siparişinle birlikte taze ve sıcak hazırlanır.
       </p>
-      <p class="text-[11px] text-orange-600 font-bold pt-1">
+      <p class="text-[11px] text-orange-600 font-bold pt-0.5">
         ⚡ Sipariş kasadan, teslimat tezgahtan. Afiyet olsun!
       </p>
     </div>
@@ -298,17 +302,21 @@
   </button>
 
   <!-- PRODUCT DETAIL MODAL -->
-  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-stone-950/70 backdrop-blur-sm p-0 sm:p-4 animate-fade-in" onclick="closeProductModal(event)">
+  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-stone-950/70 backdrop-blur-sm p-0 sm:p-4 animate-fade-in" onclick="closeProductModal()">
     <div class="relative w-full max-w-md bg-white border border-stone-200 rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col" onclick="event.stopPropagation()">
       
       <!-- Close Button -->
       <button onclick="closeProductModal()" class="absolute top-3.5 right-3.5 z-10 w-8 h-8 rounded-full bg-stone-900/70 text-white hover:bg-stone-900 flex items-center justify-center text-sm shadow-md transition-all">✕</button>
 
-      <!-- Modal Image -->
+      <!-- Modal Image Container with Smart Fallback -->
       <div id="modal-img-container" class="relative h-60 bg-stone-100 overflow-hidden shrink-0">
-        <img id="modal-img" src="" alt="" class="w-full h-full object-cover" />
-        <div class="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent"></div>
-        <div id="modal-calories" class="absolute bottom-3 left-4 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-stone-900 text-xs font-black shadow-sm"></div>
+        <img id="modal-img" src="" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; document.getElementById('modal-img-fallback').classList.remove('hidden');" />
+        <div id="modal-img-fallback" class="hidden w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 text-stone-400 select-none p-4 text-center">
+          <span id="modal-fallback-icon" class="text-5xl">🍽️</span>
+          <span class="text-xs font-black text-orange-600/70 mt-2 uppercase tracking-widest">The White Tiger</span>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent pointer-events-none"></div>
+        <span id="modal-badge" class="absolute bottom-3 left-4 px-2.5 py-1 rounded-full bg-orange-500 text-white text-xs font-black shadow-sm"></span>
       </div>
 
       <!-- Modal Content -->
@@ -321,8 +329,8 @@
         <p id="modal-desc" class="text-sm text-stone-600 leading-relaxed font-normal"></p>
 
         <!-- Sempatik Self Servis Hatırlatması -->
-        <div class="p-3.5 rounded-2xl bg-[#fff5f0] border border-orange-200 flex items-start gap-3">
-          <span class="text-xl text-orange-500">⚡</span>
+        <div class="p-3 rounded-2xl bg-[#fff5f0] border border-orange-200 flex items-start gap-2.5">
+          <span class="text-lg text-orange-500 shrink-0">⚡</span>
           <div class="text-xs text-stone-700">
             <div class="font-bold text-stone-900">Sipariş Bilgisi (Self-Servis)</div>
             Bu lezzeti tatmak için kasadan sipariş vermen yeterlidir. Hazır olduğunda sıcacık teslim alabilirsin!
@@ -340,7 +348,7 @@
   </div>
 
   <!-- "NE YESEM?" RANDOM RECOMMENDATION MODAL -->
-  <div id="random-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-stone-950/70 backdrop-blur-sm p-4 animate-fade-in" onclick="closeRandomModal(event)">
+  <div id="random-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-stone-950/70 backdrop-blur-sm p-4 animate-fade-in" onclick="closeRandomModal()">
     <div class="relative w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl border-2 border-orange-400 text-center space-y-4" onclick="event.stopPropagation()">
       <div class="w-14 h-14 rounded-2xl orange-gradient text-white flex items-center justify-center text-3xl mx-auto shadow-lg shadow-orange-500/30">
         🐯
@@ -375,13 +383,12 @@
     const MENU_DATA = [{"id":23,"name":"Burgerler & Menüler","icon":"Sandwich","color":"orange","printer_target":"kitchen","sort_order":1,"description":"Sokak lezzetleri, çıtır patso, nefis burgerler ve avantajlı menüler 🍔","restaurant_id":2,"icon_emoji":"🍔","witty_tag":"Kampüsün vazgeçilmez burger & sokak lezzetleri 🍔","group":"burger","products":[{"id":289,"category_id":23,"name":"Patso","price":140,"vat_rate":10,"description":"Çıtır ekmek arasında bol altın sarısı patates kızartması, ketçap ve mayonez lezzeti","is_active":1,"image_url":"https://i.lezzet.com.tr/images-xxlarge-recipe/patso-b25615d5-4a9a-48f2-8be8-fe50da2cca3e.jpg","calories":"540 kcal","restaurant_id":2},{"id":290,"category_id":23,"name":"Tost + Çay","price":150,"vat_rate":10,"description":"Eriyen bol kaşarlı veya karışık çıtır tost, yanında taze demlenmiş sıcacık bardak çay ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/161895/161895-1250x833.jpg","calories":"420 kcal","restaurant_id":2},{"id":291,"category_id":23,"name":"Tavuk Tantuni","price":200,"vat_rate":10,"description":"Özel sacda incecik kıyılmış tavuk eti, sumaklı soğan, maydanoz, domates ve yumuşacık lavaş dürüm","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/100113/100113-1250x833.jpg","calories":"490 kcal","restaurant_id":2},{"id":292,"category_id":23,"name":"Klasik Burger / Hamburger","price":220,"vat_rate":10,"description":"120g ızgara dana burger köftesi, marul, turşu, domates ve nefis burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80","calories":"580 kcal","restaurant_id":2},{"id":293,"category_id":23,"name":"Tavuk Burger","price":225,"vat_rate":10,"description":"Altın sarısı çıtır tavuk fileto, taze marul, kornişon turşu ve özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=800&auto=format&fit=crop&q=80","calories":"550 kcal","restaurant_id":2},{"id":294,"category_id":23,"name":"Et Burger","price":250,"vat_rate":10,"description":"Ev yapımı dana burger köftesi, karamelize soğan dokunuşu, taze yeşillik ve özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80","calories":"650 kcal","restaurant_id":2},{"id":295,"category_id":23,"name":"Antakya Döner","price":250,"vat_rate":10,"description":"Özel salçalı sarımsaklı sosuyla marine tavuk döner, patates kızartması ve kızarmış Hatay lavaşı","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/22759/22759-1250x833.jpg","calories":"560 kcal","restaurant_id":2},{"id":296,"category_id":23,"name":"Köfte Ekmek","price":250,"vat_rate":10,"description":"Izgara kasap köfteleri, taze ekmek arasında sumaklı soğan, köz biber, domates ve baharatlar","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/167017/167017-1250x833.jpg","calories":"610 kcal","restaurant_id":2},{"id":297,"category_id":23,"name":"Cheeseburger","price":290,"vat_rate":10,"description":"Burger köftesi, erimiş çift cheddar peyniri, turşu, karamelize soğan ve nefis burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=800&auto=format&fit=crop&q=80","calories":"720 kcal","restaurant_id":2},{"id":298,"category_id":23,"name":"Baba Burger","price":300,"vat_rate":10,"description":"Doyurucu çift köfte, duble eritilmiş cheddar peyniri, karamelize soğan ve şefin özel burger sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1583032015879-63e5b326cf54?w=800&auto=format&fit=crop&q=80","calories":"780 kcal","restaurant_id":2},{"id":299,"category_id":23,"name":"Tavuk Burger Menü","price":325,"vat_rate":10,"description":"Çıtır Tavuk Burger + Altın Sarısı Çıtır Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=800&auto=format&fit=crop&q=80","calories":"950 kcal","restaurant_id":2},{"id":300,"category_id":23,"name":"Et Burger Menü","price":325,"vat_rate":10,"description":"Nefis Et Burger + Altın Sarısı Çıtır Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&auto=format&fit=crop&q=80","calories":"1050 kcal","restaurant_id":2},{"id":301,"category_id":23,"name":"Cheeseburger Menü","price":390,"vat_rate":10,"description":"Çift Cheddarlı Cheeseburger + Altın Sarısı Çıtır Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop&q=80","calories":"1120 kcal","restaurant_id":2},{"id":302,"category_id":23,"name":"Baba Burger Menü","price":400,"vat_rate":10,"description":"Duble Köfteli & Cheddarlı Dev Baba Burger + Altın Sarısı Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=800&auto=format&fit=crop&q=80","calories":"1350 kcal","restaurant_id":2}]},{"id":24,"name":"Pizzalar & Aperatifler","icon":"Pizza","color":"red","printer_target":"kitchen","sort_order":2,"description":"Fırından taze çıtır pizza & çıtır atıştırmalıklar 🍕","restaurant_id":2,"icon_emoji":"🍕","witty_tag":"Fırından taze çıtır pizza & çıtır atıştırmalıklar 🍕","group":"pizza","products":[{"id":303,"category_id":24,"name":"Patates Kızartması (Kızartma Tabağı)","price":150,"vat_rate":10,"description":"Altın sarısı çıtır patates kızartması porsiyonu, ketçap ve mayonez ile","is_active":1,"image_url":"https://images.unsplash.com/photo-1576107232684-1279f3908594?w=800&auto=format&fit=crop&q=80","calories":"450 kcal","restaurant_id":2},{"id":304,"category_id":24,"name":"Çıtır Tavuk","price":200,"vat_rate":10,"description":"Altın sarısı panelenmiş çıtır tavuk parçaları, patates kızartması ve özel dip soslar","is_active":1,"image_url":"https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop&q=80","calories":"580 kcal","restaurant_id":2},{"id":305,"category_id":24,"name":"Karışık Kızartma Sepeti","price":250,"vat_rate":10,"description":"Çıtır patates, soğan halkaları, sosis parçaları, sigara böreği ve enfes dip soslar","is_active":1,"image_url":"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&auto=format&fit=crop&q=80","calories":"780 kcal","restaurant_id":2},{"id":306,"category_id":24,"name":"Karışık Pizza","price":300,"vat_rate":10,"description":"İnce çıtır hamur, özel domates sosu, mozzarella, sucuk, sosis, mantar, mısır, zeytin ve biber","is_active":1,"image_url":"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=80","calories":"720 kcal","restaurant_id":2},{"id":307,"category_id":24,"name":"Karışık Pizza Menü (Pizza Menü)","price":390,"vat_rate":10,"description":"Karışık Pizza + Yanında Altın Sarısı Patates Kızartması + Kutu İçecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&auto=format&fit=crop&q=80","calories":"1050 kcal","restaurant_id":2}]},{"id":25,"name":"Makarnalar","icon":"UtensilsCrossed","color":"amber","printer_target":"kitchen","sort_order":3,"description":"Taze İtalyan sosları ve al dente lezzetler 🍝","restaurant_id":2,"icon_emoji":"🍝","witty_tag":"Taze İtalyan sosları ve al dente lezzetler 🍝","group":"pasta","products":[{"id":308,"category_id":25,"name":"Spagetti Napoli","price":170,"vat_rate":10,"description":"Fesleğenli taze domates sosu, zeytinyağı ve rendelenmiş peynir ile klasik Napoli spagettisi","is_active":1,"image_url":"https://images.unsplash.com/photo-1621996346565-e3d5d62817ee?w=800&auto=format&fit=crop&q=80","calories":"480 kcal","restaurant_id":2},{"id":309,"category_id":25,"name":"Sebzeli Penne","price":200,"vat_rate":10,"description":"Sotelenmiş taze mevsim sebzeleri, zeytinyağı, hafif domates sosu ve Akdeniz baharatları","is_active":1,"image_url":"https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=800&auto=format&fit=crop&q=80","calories":"440 kcal","restaurant_id":2},{"id":310,"category_id":25,"name":"Penne Alfredo","price":265,"vat_rate":10,"description":"Zengin krema, sotelenmiş mantar dilimleri, tavuk parçaları ve rendelenmiş parmesan peyniri","is_active":1,"image_url":"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&auto=format&fit=crop&q=80","calories":"620 kcal","restaurant_id":2},{"id":311,"category_id":25,"name":"Penne Köri","price":265,"vat_rate":10,"description":"Hafif baharatlı kremsi köri sosu, marine edilmiş sulu tavuk dilimleri ve taze yeşillik","is_active":1,"image_url":"https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800&auto=format&fit=crop&q=80","calories":"610 kcal","restaurant_id":2},{"id":312,"category_id":25,"name":"Fettuccine Alfredo","price":275,"vat_rate":10,"description":"Geleneksel İtalyan yassı makarna, yoğun kremalı mantar ve tavuk sosu, parmesan dokunuşu","is_active":1,"image_url":"https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=800&auto=format&fit=crop&q=80","calories":"660 kcal","restaurant_id":2},{"id":313,"category_id":25,"name":"Fettuccine Köri","price":275,"vat_rate":10,"description":"Geniş şerit fettuccine, aromatik kremsi köri sosu, marine tavuk dilimleri ve parmesan","is_active":1,"image_url":"https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800&auto=format&fit=crop&q=80","calories":"650 kcal","restaurant_id":2},{"id":314,"category_id":25,"name":"Spagetti Bolonez","price":275,"vat_rate":10,"description":"Ağır ateşte pişmiş dana kıymalı geleneksel domates sosu, fesleğen ve rendelenmiş peynir","is_active":1,"image_url":"https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=800&auto=format&fit=crop&q=80","calories":"590 kcal","restaurant_id":2},{"id":315,"category_id":25,"name":"Mexican Penne","price":275,"vat_rate":10,"description":"Hafif acı Meksika baharatları, renkli biberler, mısır, zeytin, jülyen tavuk ve domates sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&auto=format&fit=crop&q=80","calories":"580 kcal","restaurant_id":2}]},{"id":26,"name":"Tavuk Dünyası Menüleri (Royal Tabaklar)","icon":"CookingPot","color":"emerald","printer_target":"kitchen","sort_order":4,"description":"Dolu dolu 3’lü kombinasyon tabakları (Tavuk + Özel Makarna/Pilav + Salata) 🍗","restaurant_id":2,"icon_emoji":"🍗","witty_tag":"Dolu dolu 3’lü kombinasyon tabakları 🍗","group":"plate","products":[{"id":316,"category_id":26,"name":"Royal Chicken Rice (Tavuk + Pilav + Salata)","price":290,"vat_rate":10,"description":"Didiklenmiş marine tavuk göğsü, tane tane tereyağlı pirinç pilavı ve taze Akdeniz mevsim salatası","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/255612/255612-1250x833.jpg","calories":"620 kcal","restaurant_id":2},{"id":317,"category_id":26,"name":"Royal Mushroom (Kremalı Mantarlı Tavuk + Makarna + Salata)","price":290,"vat_rate":10,"description":"Kremalı mantar soslu jülyen tavuk dilimleri, leziz makarna ve taze Akdeniz yeşillikleri ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/239284/239284-1250x833.jpg","calories":"750 kcal","restaurant_id":2},{"id":318,"category_id":26,"name":"Royal Curry (Kremalı Köri Tavuk + Makarna + Salata)","price":290,"vat_rate":10,"description":"Kremalı aromatik köri soslu marine tavuk, enfes tereyağlı makarna ve mevsim yeşillikleri ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/239284/239284-1250x833.jpg","calories":"710 kcal","restaurant_id":2},{"id":319,"category_id":26,"name":"Tavuk Izgara","price":260,"vat_rate":10,"description":"Közde marine edilmiş yumuşacık tavuk göğsü fileto, yanında pilav ve közlenmiş sebzeler ile","is_active":1,"image_url":"https://imgrosetta.yemek.com/file/174740/174740-1250x833.jpg","calories":"520 kcal","restaurant_id":2}]},{"id":27,"name":"Taze Salatalar","icon":"Salad","color":"teal","printer_target":"kitchen","sort_order":5,"description":"Günlük taze yeşillikler ve hafif sağlıklı öğünler 🥗","restaurant_id":2,"icon_emoji":"🥗","witty_tag":"Taze, çıtır ve hafif sağlıklı kaçamaklar 🥗","group":"salad","products":[{"id":320,"category_id":27,"name":"Sezar Salata","price":265,"vat_rate":10,"description":"Taze göbek marul, ızgara tavuk dilimleri, baharatlı kruton ekmek, parmesan ve özel Sezar sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=800&auto=format&fit=crop&q=80","calories":"390 kcal","restaurant_id":2},{"id":321,"category_id":27,"name":"Tavuklu Salata","price":265,"vat_rate":10,"description":"Zengin Akdeniz yeşillikleri, marine ızgara tavuk parçaları, çeri domates, mısır ve zeytinyağlı sos","is_active":1,"image_url":"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80","calories":"380 kcal","restaurant_id":2},{"id":322,"category_id":27,"name":"Ton Balıklı Salata","price":275,"vat_rate":10,"description":"Akdeniz yeşillikleri, lezzetli ton balığı parçaları, tatlı mısır, çeri domates ve limon-zeytinyağı sosu","is_active":1,"image_url":"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80","calories":"340 kcal","restaurant_id":2}]},{"id":28,"name":"Soğuk & Sıcak İçecekler","icon":"GlassWater","color":"blue","printer_target":"kitchen","sort_order":6,"description":"Buz gibi ferahlatıcılar & sıcacık keyifler 🥤","restaurant_id":2,"icon_emoji":"🥤","witty_tag":"Buz gibi ferahlatıcılar & sıcacık lezzetler 🥤","group":"drink","products":[{"id":323,"category_id":28,"name":"Çay","price":20,"vat_rate":10,"description":"Taze demlenmiş tavşan kanı ince belli bardak çay","is_active":1,"image_url":"https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80","calories":"2 kcal","restaurant_id":2},{"id":324,"category_id":28,"name":"Su","price":20,"vat_rate":10,"description":"0.5L doğal kaynak suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=800&auto=format&fit=crop&q=80","calories":"0 kcal","restaurant_id":2},{"id":325,"category_id":28,"name":"Maden Suyu (Sade)","price":25,"vat_rate":10,"description":"Cam şişe soğuk doğal maden suyu / soda","is_active":1,"image_url":"https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=800&auto=format&fit=crop&q=80","calories":"0 kcal","restaurant_id":2},{"id":326,"category_id":28,"name":"Capri-Sun","price":35,"vat_rate":10,"description":"Eğlenceli ve lezzetli meyveli pipetli içecek","is_active":1,"image_url":"https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&auto=format&fit=crop&q=80","calories":"85 kcal","restaurant_id":2},{"id":327,"category_id":28,"name":"Maden Suyu (Meyveli)","price":40,"vat_rate":10,"description":"Limonlu, elmalı veya vişneli ferahlatıcı meyveli maden suyu","is_active":1,"image_url":"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&auto=format&fit=crop&q=80","calories":"45 kcal","restaurant_id":2},{"id":328,"category_id":28,"name":"Gazoz","price":50,"vat_rate":10,"description":"Buz gibi nostaljik ferahlatıcı gazoz","is_active":1,"image_url":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&auto=format&fit=crop&q=80","calories":"120 kcal","restaurant_id":2},{"id":329,"category_id":28,"name":"Kutu İçecekler (Kola, Fanta, Sprite)","price":90,"vat_rate":10,"description":"330ml buz gibi soğuk kutu meşrubatlar (Coca-Cola, Fanta, Sprite vb.)","is_active":1,"image_url":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&auto=format&fit=crop&q=80","calories":"140 kcal","restaurant_id":2},{"id":330,"category_id":28,"name":"Kahveler","price":100,"vat_rate":10,"description":"Taze çekilmiş filtre kahve, Americano veya sütlü sıcak kahve seçenekleri","is_active":1,"image_url":"https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=80","calories":"15 kcal","restaurant_id":2},{"id":331,"category_id":28,"name":"Red Bull (Energy Drink / Sugarfree / Peach)","price":100,"vat_rate":10,"description":"250ml buz gibi kutu Red Bull enerji içeceği; Classic, Sugarfree veya Peach Edition seçenekleriyle","is_active":1,"image_url":"https://images.unsplash.com/photo-1613218222876-954978a4404e?w=800&auto=format&fit=crop&q=80","calories":"115 kcal","restaurant_id":2},{"id":332,"category_id":28,"name":"Salep","price":150,"vat_rate":10,"description":"Üzeri bol tarçın serpilmiş sıcacık, yoğun kıvamlı geleneksel salep","is_active":1,"image_url":"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&auto=format&fit=crop&q=80","calories":"180 kcal","restaurant_id":2},{"id":333,"category_id":28,"name":"Atom","price":200,"vat_rate":10,"description":"Doğal süt, bal, muz, taze meyveler ve bol fındık-cevizli atom enerji bombası","is_active":1,"image_url":"https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=800&auto=format&fit=crop&q=80","calories":"280 kcal","restaurant_id":2}]}];
     const RESTAURANT = {"id":2,"name":"THE WHITE TIGER","slug":"the-white-tiger","slogan":"Eat, Drink & Chill • Kampüsün Buluşma Noktası","logo_url":"","theme_color":"gold","qr_url":"https://shyrianx.github.io/makarna-evi/the-white-tiger.html","created_at":"2026-11-07 18:50:28"};
     const SETTINGS = {"wifi_name":"","wifi_password":"","currency":"₺"};
-    const BUILD_TIMESTAMP = 1794121803771;
+    const BUILD_TIMESTAMP = 1794122105119;
 
-    let activeGroupId = 'all'; // 'all', 'pasta', 'burger', 'plate', 'salad', 'drink'
-    let activeCategoryId = null;
+    let selectedCategoryId = 'all'; // 'all' or category.id
     let searchQuery = '';
 
-    // Student Favorites (Highlighted real items from current catalog)
+    // Student Favorites (Handpicked top dishes from current catalog)
     const FAVORITE_NAMES = [
       'Patso',
       'Tavuk Burger Menü',
@@ -398,9 +405,28 @@
     const ALL_PRODUCTS = [];
     MENU_DATA.forEach(cat => {
       (cat.products || []).forEach(p => {
-        ALL_PRODUCTS.push({ ...p, categoryName: cat.name, categoryIcon: cat.icon_emoji });
+        ALL_PRODUCTS.push({ 
+          ...p, 
+          categoryName: cat.name, 
+          categoryIcon: cat.icon_emoji,
+          categoryId: cat.id
+        });
       });
     });
+
+    // Helper for intelligent product badge (replaces arbitrary calories)
+    function getProductBadge(product) {
+      if (product.name.includes('Menü')) {
+        return { text: '🎁 Menü', bg: 'bg-emerald-600 text-white' };
+      }
+      if (FAVORITE_NAMES.some(fav => product.name.includes(fav) || fav.includes(product.name))) {
+        return { text: '🔥 Favori', bg: 'bg-orange-500 text-white' };
+      }
+      if (product.name.includes('Tantuni') || product.name.includes('Döner') || product.name.includes('Patso')) {
+        return { text: '⚡ Sokak Lezzeti', bg: 'bg-stone-900 text-white' };
+      }
+      return null;
+    }
 
     // Wi-Fi Display
     if (SETTINGS.wifi_name && SETTINGS.wifi_name.trim()) {
@@ -414,7 +440,7 @@
       }
     }
 
-    // Render Student Favorites Carousel
+    // Render Student Favorites Carousel (Clean, balanced card dimensions)
     function renderFavorites() {
       const fc = document.getElementById('favorites-container');
       if (!fc) return;
@@ -422,109 +448,140 @@
       const favItems = ALL_PRODUCTS.filter(p => FAVORITE_NAMES.some(fav => p.name.includes(fav) || fav.includes(p.name)));
       
       fc.innerHTML = favItems.map(p => {
+        const badge = getProductBadge(p) || { text: '🔥 Favori', bg: 'bg-orange-500 text-white' };
         return `
           <div 
             onclick="openProductModal(${p.id})"
             class="food-card shrink-0 w-44 rounded-2xl p-2.5 cursor-pointer tap-bounce flex flex-col justify-between shadow-sm snap-start"
           >
             <div>
-              <div class="relative h-28 rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-                ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />` : '<div class="w-full h-full flex items-center justify-center text-2xl">🍽️</div>'}
-                <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-orange-500 text-white text-[9px] font-black shadow-sm">
-                  🔥 Favori
+              <div class="relative h-28 rounded-xl overflow-hidden bg-stone-100 border border-stone-200/80">
+                <img 
+                  src="${p.image_url}" 
+                  alt="${p.name}" 
+                  loading="lazy" 
+                  class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" 
+                />
+                <div class="hidden w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 text-stone-400 select-none p-2 text-center">
+                  <span class="text-3xl">${p.categoryIcon || '🍽️'}</span>
+                  <span class="text-[9px] font-black text-orange-600/70 mt-1 uppercase tracking-wider">White Tiger</span>
+                </div>
+                <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full ${badge.bg} text-[9px] font-black shadow-sm">
+                  ${badge.text}
                 </span>
-                ${p.calories ? `<span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-md bg-stone-900/80 backdrop-blur-sm text-[9px] text-white font-bold">${p.calories}</span>` : ''}
               </div>
               <h4 class="text-xs font-black text-stone-900 mt-2 line-clamp-1 leading-snug">${p.name}</h4>
-              <p class="text-[10px] text-stone-500 line-clamp-1 mt-0.5">${p.description || ''}</p>
+              <p class="text-[10px] text-stone-500 line-clamp-1 mt-0.5 leading-snug">${p.description || ''}</p>
             </div>
 
             <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-stone-100">
               <span class="text-xs font-black text-orange-600">${Number(p.price).toFixed(2)} ₺</span>
-              <span class="text-[10px] font-bold text-stone-600 hover:text-orange-600">İncele →</span>
+              <span class="text-[10px] font-bold text-stone-500 hover:text-orange-600">İncele →</span>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Main Group Filter
-    function setMainGroup(group) {
-      activeGroupId = group;
-      activeCategoryId = null;
-
-      document.querySelectorAll('.group-btn').forEach(btn => {
-        if (btn.getAttribute('data-group') === group) {
-          btn.className = 'group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all pill-active';
-        } else {
-          btn.className = 'group-btn tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-600 border border-stone-200 hover:border-orange-300';
-        }
-      });
-
-      renderCategoryPills();
-      renderMenu();
-    }
-
-    // Render Category Pills
-    function renderCategoryPills() {
-      const nav = document.getElementById('category-pills');
+    // Render Single, Clean Category Chips (No double rows!)
+    function renderCategoryChips() {
+      const nav = document.getElementById('category-chips');
       if (!nav) return;
 
-      const filteredCategories = MENU_DATA.filter(cat => {
-        if (activeGroupId === 'all') return true;
-        return cat.group === activeGroupId;
-      });
+      const isAllActive = selectedCategoryId === 'all';
 
-      nav.innerHTML = filteredCategories.map(cat => {
-        const isActive = cat.id === activeCategoryId && !searchQuery;
+      let html = `
+        <button
+          onclick="selectCategoryChip('all')"
+          class="tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border ${
+            isAllActive 
+              ? 'chip-active' 
+              : 'bg-white text-stone-600 border-stone-200 hover:border-orange-300'
+          }"
+        >
+          <span>🌟</span>
+          <span>Tümü</span>
+        </button>
+      `;
+
+      MENU_DATA.forEach(cat => {
+        const isActive = selectedCategoryId === cat.id;
         const count = cat.products?.length || 0;
-        return `
+        html += `
           <button
-            onclick="selectCategory(${cat.id})"
-            class="tap-bounce shrink-0 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all ${
+            onclick="selectCategoryChip(${cat.id})"
+            class="tap-bounce shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border ${
               isActive 
-                ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' 
-                : 'bg-white text-stone-600 hover:text-stone-900 border border-stone-200/90'
+                ? 'chip-active' 
+                : 'bg-white text-stone-600 border-stone-200 hover:border-orange-300'
             }"
           >
             <span>${cat.icon_emoji}</span>
             <span>${cat.name}</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}">${count}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${isActive ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}">${count}</span>
           </button>
         `;
-      }).join('');
+      });
+
+      nav.innerHTML = html;
     }
 
-    // Select Category
-    function selectCategory(id) {
-      activeCategoryId = id;
+    // Select Category Chip
+    function selectCategoryChip(id) {
+      selectedCategoryId = id;
+      renderCategoryChips();
+
+      if (id === 'all') {
+        renderMenu();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      // If user had searched, clear search to show the category
       if (searchQuery) {
         searchQuery = '';
         const si = document.getElementById('search-input');
         if (si) si.value = '';
         toggleSearchClear(false);
       }
-      renderCategoryPills();
-      const el = document.getElementById('cat-section-' + id);
-      if (el) {
-        const offset = 140;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      }
+
+      renderMenu();
+
+      // Smooth scroll to the target category with proper offset
+      setTimeout(() => {
+        const el = document.getElementById('cat-section-' + id);
+        if (el) {
+          const headerOffset = 135;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - headerOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 50);
     }
 
-    // Render Products
+    // Render Menu Cards
     function renderMenu() {
       const container = document.getElementById('menu-container');
+      const spotlight = document.getElementById('spotlight-section');
       if (!container) return;
 
       const q = searchQuery.toLowerCase().trim();
 
+      // If searching, hide spotlight to keep UI focused
+      if (spotlight) {
+        if (q.length > 0 || selectedCategoryId !== 'all') {
+          spotlight.classList.add('hidden');
+        } else {
+          spotlight.classList.remove('hidden');
+        }
+      }
+
       const filteredCategories = MENU_DATA.map(cat => {
-        if (activeGroupId !== 'all' && cat.group !== activeGroupId) {
+        // If a specific category chip is active, show only that category
+        if (selectedCategoryId !== 'all' && cat.id !== selectedCategoryId) {
           return { ...cat, products: [] };
         }
         const matchedProds = (cat.products || []).filter(p => {
@@ -537,9 +594,9 @@
 
       if (filteredCategories.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-14 space-y-3 bg-white rounded-3xl border border-stone-200 p-6 shadow-sm">
+          <div class="text-center py-12 space-y-3 bg-white rounded-3xl border border-stone-200 p-6 shadow-sm">
             <div class="text-5xl">🐯</div>
-            <div class="text-base font-black text-stone-900">Kaplan aradı ama bulamadı. 🐯</div>
+            <div class="text-base font-black text-stone-900">Kaplan aradı ama bulamadı 🐯</div>
             <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
               "${searchQuery}" aramasına uygun bir ürün bulamadık. Bir harf hatası olabilir mi? Ya da menüdeki diğer lezzetlere göz atabilirsin!
             </p>
@@ -555,52 +612,57 @@
         return `
           <section id="cat-section-${cat.id}" class="space-y-3.5 scroll-mt-36">
             
-            <!-- Category Header with Witty Tag -->
-            <div class="border-b border-stone-200/80 pb-2.5">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <span class="text-2xl">${cat.icon_emoji}</span>
-                  <div>
-                    <h2 class="text-base font-black text-stone-900 tracking-tight">${cat.name}</h2>
-                    ${cat.witty_tag ? `<p class="text-xs text-orange-600 font-bold">${cat.witty_tag}</p>` : ''}
-                  </div>
+            <!-- Category Header -->
+            <div class="border-b border-stone-200/80 pb-2 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">${cat.icon_emoji}</span>
+                <div>
+                  <h2 class="text-base font-black text-stone-900 tracking-tight leading-tight">${cat.name}</h2>
+                  ${cat.witty_tag ? `<p class="text-[11px] text-orange-600 font-bold">${cat.witty_tag}</p>` : ''}
                 </div>
-                <span class="text-xs text-stone-500 font-extrabold bg-stone-100 px-2 py-0.5 rounded-lg">
-                  ${cat.products.length} Çeşit
-                </span>
               </div>
-              ${cat.description ? `<p class="text-[11px] text-stone-500 mt-1 font-medium">${cat.description}</p>` : ''}
+              <span class="text-[11px] text-stone-500 font-extrabold bg-stone-100 px-2 py-0.5 rounded-lg">
+                ${cat.products.length} Çeşit
+              </span>
             </div>
 
-            <!-- Product Cards Grid -->
+            <!-- Product Cards List (Generous, readable spacing) -->
             <div class="grid grid-cols-1 gap-3">
               ${cat.products.map(p => {
-                const imgHtml = p.image_url 
-                  ? `<div class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden shrink-0 bg-stone-100 border border-stone-200">
-                      <img src="${p.image_url}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                      ${p.calories ? `<span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-md bg-stone-900/80 backdrop-blur-sm text-[9px] text-white font-bold">${p.calories}</span>` : ''}
-                    </div>`
-                  : '';
-
+                const badge = getProductBadge(p);
                 return `
                   <article 
                     onclick="openProductModal(${p.id})"
                     class="food-card rounded-2xl p-3 flex gap-3 cursor-pointer tap-bounce items-center shadow-sm"
                   >
-                    ${imgHtml}
+                    <!-- Product Image with Error Fallback -->
+                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 bg-stone-100 border border-stone-200/80">
+                      <img 
+                        src="${p.image_url}" 
+                        alt="${p.name}" 
+                        loading="lazy" 
+                        class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+                        onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" 
+                      />
+                      <div class="hidden w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 text-stone-400 select-none p-1 text-center">
+                        <span class="text-3xl">${cat.icon_emoji}</span>
+                        <span class="text-[8px] font-black text-orange-600/70 mt-1 uppercase tracking-wider">White Tiger</span>
+                      </div>
+                      ${badge ? `<span class="absolute top-1 left-1 px-1.5 py-0.2 rounded-full ${badge.bg} text-[8px] font-black shadow-sm">${badge.text}</span>` : ''}
+                    </div>
+
+                    <!-- Details -->
                     <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch py-0.5">
                       <div>
-                        <div class="flex items-start justify-between gap-1">
-                          <h3 class="text-sm font-black text-stone-900 tracking-tight leading-snug line-clamp-1">${p.name}</h3>
-                        </div>
-                        ${p.description ? `<p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed font-normal">${p.description}</p>` : ''}
+                        <h3 class="text-sm font-black text-stone-900 tracking-tight leading-snug line-clamp-1">${p.name}</h3>
+                        ${p.description ? `<p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-snug font-normal">${p.description}</p>` : ''}
                       </div>
 
-                      <div class="flex items-center justify-between mt-2.5 pt-2 border-t border-stone-100">
+                      <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-stone-100">
                         <span class="text-base font-black text-orange-600">
                           ${Number(p.price).toFixed(2)} ₺
                         </span>
-                        <span class="text-xs font-bold text-stone-500 flex items-center gap-1 hover:text-orange-600 transition-colors">
+                        <span class="text-xs font-bold text-stone-400 flex items-center gap-1 hover:text-orange-600 transition-colors">
                           <span>İncele</span>
                           <span>→</span>
                         </span>
@@ -621,31 +683,37 @@
       if (!found) return;
 
       const modal = document.getElementById('product-modal');
-      const imgCont = document.getElementById('modal-img-container');
       const img = document.getElementById('modal-img');
+      const fallback = document.getElementById('modal-img-fallback');
+      const fallbackIcon = document.getElementById('modal-fallback-icon');
       const title = document.getElementById('modal-title');
       const desc = document.getElementById('modal-desc');
       const price = document.getElementById('modal-price');
       const category = document.getElementById('modal-category');
-      const calories = document.getElementById('modal-calories');
+      const badge = document.getElementById('modal-badge');
 
       title.textContent = found.name;
       desc.textContent = found.description || 'Özenle hazırlanan The White Tiger spesiyali.';
       price.textContent = Number(found.price).toFixed(2) + ' ₺';
-      category.textContent = found.categoryName || '';
+      category.textContent = (found.categoryIcon ? found.categoryIcon + ' ' : '') + (found.categoryName || '');
 
-      if (found.image_url) {
-        img.src = found.image_url;
-        imgCont.classList.remove('hidden');
+      const productBadge = getProductBadge(found);
+      if (productBadge) {
+        badge.textContent = productBadge.text;
+        badge.className = 'absolute bottom-3 left-4 px-2.5 py-1 rounded-full text-xs font-black shadow-sm ' + productBadge.bg;
+        badge.classList.remove('hidden');
       } else {
-        imgCont.classList.add('hidden');
+        badge.classList.add('hidden');
       }
 
-      if (found.calories) {
-        calories.textContent = found.calories;
-        calories.classList.remove('hidden');
+      fallbackIcon.textContent = found.categoryIcon || '🍽️';
+      if (found.image_url) {
+        img.style.display = 'block';
+        fallback.classList.add('hidden');
+        img.src = found.image_url;
       } else {
-        calories.classList.add('hidden');
+        img.style.display = 'none';
+        fallback.classList.remove('hidden');
       }
 
       modal.classList.remove('hidden');
@@ -726,7 +794,6 @@
       searchQuery = '';
       if (searchInput) searchInput.value = '';
       toggleSearchClear(false);
-      renderCategoryPills();
       renderMenu();
     }
 
@@ -758,7 +825,7 @@
 
     // Initialize
     renderFavorites();
-    renderCategoryPills();
+    renderCategoryChips();
     renderMenu();
   </script>
 </body>
