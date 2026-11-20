@@ -6,8 +6,14 @@
   
   <!-- Auto-escape Surge: forward obsolete surge domain to official GitHub Pages URL -->
   <script>
-    if (window.location.hostname.includes('surge.sh')) {
-      window.location.replace('https://shyrianx.github.io/makarna-evi/index.html?v=2');
+    if (window.location.hostname === 'ozdemirsoft.surge.sh') {
+      var target = new URL('https://shyrianx.github.io/makarna-evi/index.html?v=2');
+      var incoming = new URLSearchParams(window.location.search);
+      incoming.forEach(function(value, key) {
+        if (key !== 'v') target.searchParams.set(key, value);
+      });
+      target.hash = window.location.hash;
+      window.location.replace(target.toString());
     }
   </script>
 
